@@ -24,7 +24,7 @@
     { "url": "https://synthlucida.com/vapetrack.html", "name": "VAPETRACK - app (CZ)", "module": "generic" },
     { "url": "https://synthlucida.com/delnas.html", "name": "DĚLŇAS", "module": "generic" },
     { "url": "https://synthlucida.com/relax-landing.html", "name": "Ambient Flow - landing", "module": "generic" },
-    { "url": "https://synthlucida.com/relax.html", "name": "Ambient Flow - skutečná appka", "module": "relaxplayer" },
+    { "url": "https://synthlucida.com/relax.html", "name": "Ambient Flow - skutečná appka", "module": "generic" },
     { "url": "https://synthlucida.com/xtally-landing.html", "name": "Xtally - landing", "module": "generic" },
     { "url": "https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html", "name": "DZMASTER - landing", "module": "generic" },
     { "url": "https://webzen2026.github.io/xtally/?lang=en", "name": "Xtally Documents", "module": "generic" },
