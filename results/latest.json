@@ -1,0 +1,1361 @@
+{
+  "run_at": "2026-09-21T09:48:10.325443+00:00",
+  "summary": {
+    "ok": 24,
+    "warn": 6,
+    "fail": 0,
+    "total": 30
+  },
+  "results": [
+    {
+      "name": "SYNTHLUCIDA - Welcome",
+      "url": "https://synthlucida.com",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:44:31.476149+00:00",
+      "status_code": 200,
+      "load_time_ms": 1710,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 30,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "Explore SYNTHLUCIDA\n→",
+          "clicked": true
+        },
+        {
+          "text": "Apps▾",
+          "clicked": true
+        },
+        {
+          "text": "About▾",
+          "clicked": true
+        },
+        {
+          "text": "Android App▾",
+          "clicked": true
+        },
+        {
+          "text": "Contact▾",
+          "clicked": true
+        },
+        {
+          "text": "🇨🇿 CZ",
+          "clicked": true
+        },
+        {
+          "text": "📋 Popis aplikací\n▾",
+          "clicked": true
+        },
+        {
+          "text": "📖\nPřečíst celou recenzi\n▾",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "SYNTHLUCIDA - Welcome (CZ)",
+      "url": "https://synthlucida.com/index-cz.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:44:41.337063+00:00",
+      "status_code": 200,
+      "load_time_ms": 1294,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 30,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "Prozkoumat SYNTHLUCIDA\n→",
+          "clicked": true
+        },
+        {
+          "text": "Aplikace▾",
+          "clicked": true
+        },
+        {
+          "text": "O mně▾",
+          "clicked": true
+        },
+        {
+          "text": "Android aplikace▾",
+          "clicked": true
+        },
+        {
+          "text": "Kontakt▾",
+          "clicked": true
+        },
+        {
+          "text": "🇬🇧 EN",
+          "clicked": true
+        },
+        {
+          "text": "📋 App Descriptions\n▾",
+          "clicked": true
+        },
+        {
+          "text": "📖\nRead the Full Review\n▾",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "RelaxPlayer (landing/app)",
+      "url": "https://relaxplayer.eu",
+      "module": "relaxplayer",
+      "checked_at": "2026-09-21T09:44:48.252315+00:00",
+      "status_code": 200,
+      "load_time_ms": 1726,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 20,
+      "pwa": {
+        "manifest_url": "https://relaxplayer.eu/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "Open menu",
+          "clicked": true
+        },
+        {
+          "text": "CS",
+          "clicked": true
+        },
+        {
+          "text": "Slide 1",
+          "clicked": true
+        },
+        {
+          "text": "Slide 2",
+          "clicked": true
+        },
+        {
+          "text": "Slide 3",
+          "clicked": true
+        },
+        {
+          "text": "Slide 4",
+          "clicked": true
+        },
+        {
+          "text": "Slide 5",
+          "clicked": true
+        }
+      ],
+      "custom": {
+        "tested": true,
+        "clicked_selector": "[aria-label*='play' i]",
+        "audio_context_states": [],
+        "success_heuristic": false,
+        "note": "Tlačítko se podařilo kliknout, ale žádný AudioContext nemá stav 'running'. Možné důvody: web používá <audio> element místo Web Audio API (v tom případě uprav tuhle funkci, ať místo AudioContextu kontroluje audio.paused===false), nebo přehrávání vyžaduje druhé kliknutí kvůli autoplay policy prohlížeče."
+      },
+      "overall": "warn",
+      "notes": [
+        "custom test proběhl, ale výsledek nevypadá jako úspěch"
+      ]
+    },
+    {
+      "name": "WEBZENith - landing",
+      "url": "https://synthlucida.com/landing_webzenith-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:44:57.106450+00:00",
+      "status_code": 200,
+      "load_time_ms": 818,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 14,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "WEBZENith - generator app",
+      "url": "https://synthlucida.com/webzen-en.html",
+      "module": "webzenith_generator",
+      "checked_at": "2026-09-21T09:44:59.414740+00:00",
+      "status_code": 200,
+      "load_time_ms": 1018,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 22,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/webzen-manifest-en.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "🌐",
+          "clicked": true
+        },
+        {
+          "text": "↶ Undo",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "↷ Redo",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⛶ Fullscreen",
+          "clicked": true
+        },
+        {
+          "text": "☰ Menu",
+          "clicked": true
+        },
+        {
+          "text": "↓ Download HTML\nDownloads only the main ",
+          "clicked": true
+        },
+        {
+          "text": "BASIC INFO",
+          "clicked": true
+        },
+        {
+          "text": "⤢",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "SITE ICONS",
+          "clicked": true
+        },
+        {
+          "text": "HERO SECTION",
+          "clicked": true
+        },
+        {
+          "text": "B",
+          "clicked": true
+        }
+      ],
+      "custom": {
+        "tested": false,
+        "inputs_filled": 6,
+        "reason": "Generovací tlačítko nenalezeno - uprav GENERATE_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML."
+      },
+      "overall": "warn",
+      "notes": [
+        "custom test nenašel očekávaný prvek (zkontroluj selektory)"
+      ]
+    },
+    {
+      "name": "SEOCHECKER",
+      "url": "https://synthlucida.com/seochecker-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:11.093252+00:00",
+      "status_code": 200,
+      "load_time_ms": 1177,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 10,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/seochecker-manifest-en.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "📁 Choose HTML file(s)",
+          "clicked": true
+        },
+        {
+          "text": "Check",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "SEOVIP",
+      "url": "https://webzen2026.github.io/seovip/en/landing.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:16.113690+00:00",
+      "status_code": 200,
+      "load_time_ms": 4055,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 10,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/seovip/en/seochecker-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Uklidni To",
+      "url": "https://uklidnito.eu",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:21.486970+00:00",
+      "status_code": 200,
+      "load_time_ms": 3622,
+      "console_errors": [
+        "requestStorageAccess: Permission denied.",
+        "requestStorageAccess: Permission denied.",
+        "Failed to load resource: the server responded with a status of 403 ()"
+      ],
+      "broken_links": [],
+      "links_checked": 30,
+      "pwa": {
+        "manifest_url": "https://uklidnito.eu/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "✉ Kontakt\n▾",
+          "clicked": true
+        },
+        {
+          "text": "Odeslat zprávu",
+          "clicked": true
+        },
+        {
+          "text": "✓",
+          "clicked": true
+        },
+        {
+          "text": "Modrá",
+          "clicked": true
+        },
+        {
+          "text": "Blankytná",
+          "clicked": true
+        },
+        {
+          "text": "Tyrkysová",
+          "clicked": true
+        },
+        {
+          "text": "Mátová",
+          "clicked": true
+        },
+        {
+          "text": "Zelená",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "warn",
+      "notes": [
+        "3 JS/konzolových chyb"
+      ]
+    },
+    {
+      "name": "Noctuary Tarot",
+      "url": "https://noctuarytarot.com/landing-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:30.146546+00:00",
+      "status_code": 200,
+      "load_time_ms": 818,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 10,
+      "pwa": {
+        "manifest_url": "https://noctuarytarot.com/manifest-en.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "SYNTHLUCIDA Weather",
+      "url": "https://synthlucida.com/landing_weather.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:32.482379+00:00",
+      "status_code": 200,
+      "load_time_ms": 830,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 7,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "TRIPCOST",
+      "url": "https://synthlucida.com/tripcost.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:34.442123+00:00",
+      "status_code": 200,
+      "load_time_ms": 1330,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 16,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/tripcost-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "✕",
+          "clicked": true
+        },
+        {
+          "text": "⛽\nBenzín",
+          "clicked": true
+        },
+        {
+          "text": "⛽\nNafta",
+          "clicked": true
+        },
+        {
+          "text": "🔥\nLPG",
+          "clicked": true
+        },
+        {
+          "text": "⚡\nElektro",
+          "clicked": true
+        },
+        {
+          "text": "−",
+          "clicked": true
+        },
+        {
+          "text": "+",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Deník vozidla / Vehicle Logbook",
+      "url": "https://synthlucida.com/denik-vozidla.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:39.874942+00:00",
+      "status_code": 200,
+      "load_time_ms": 1097,
+      "console_errors": [
+        "A bad HTTP response code (404) was received when fetching the script.",
+        "Failed to load resource: the server responded with a status of 400 ()"
+      ],
+      "broken_links": [],
+      "links_checked": 15,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/denik-vozidla-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "Všechna vozidla",
+          "clicked": true
+        },
+        {
+          "text": "Přidat",
+          "clicked": true
+        },
+        {
+          "text": "Import vše",
+          "clicked": true
+        },
+        {
+          "text": "Export vše",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "warn",
+      "notes": [
+        "2 JS/konzolových chyb"
+      ]
+    },
+    {
+      "name": "PAYDAY",
+      "url": "https://synthlucida.com/vyplata.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:44.058290+00:00",
+      "status_code": 200,
+      "load_time_ms": 775,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 13,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/vyplata-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "−",
+          "clicked": true
+        },
+        {
+          "text": "+",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Progrese - landing",
+      "url": "https://synthlucida.com/progrese-landing.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:46.829003+00:00",
+      "status_code": 200,
+      "load_time_ms": 1088,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 14,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Mixing Lab",
+      "url": "https://synthlucida.com/michani-liquidu.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:49.257810+00:00",
+      "status_code": 200,
+      "load_time_ms": 574,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 14,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/michani-liquidu-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "SPOČÍTAT NAMÍCHÁNÍ",
+          "clicked": true
+        },
+        {
+          "text": "💾 ULOŽIT SÍLU NAMÍCHÁNÍ",
+          "clicked": true
+        },
+        {
+          "text": "⬇ EXPORT DO PDF",
+          "clicked": true
+        },
+        {
+          "text": "STÁHNOUT ZÁLOHU",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Spirit Level",
+      "url": "https://synthlucida.com/vodovaha-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:52.454593+00:00",
+      "status_code": 200,
+      "load_time_ms": 1104,
+      "console_errors": [
+        "Blocked call to navigator.vibrate because user hasn't tapped on the frame or any embedded frame yet: https://www.chromestatus.com/feature/5644273861001216.",
+        "Failed to load resource: the server responded with a status of 400 ()"
+      ],
+      "broken_links": [],
+      "links_checked": 12,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/vodovaha-en-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "◎\nSurface",
+          "clicked": true
+        },
+        {
+          "text": "📐\nAngle",
+          "clicked": true
+        },
+        {
+          "text": "📏\nRuler",
+          "clicked": true
+        },
+        {
+          "text": "🔦\nFlashlight",
+          "clicked": true
+        },
+        {
+          "text": "⇄\nConvert",
+          "clicked": true
+        },
+        {
+          "text": "🧮\nCalculator",
+          "clicked": true
+        },
+        {
+          "text": "C",
+          "clicked": true
+        },
+        {
+          "text": "⌫",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "warn",
+      "notes": [
+        "2 JS/konzolových chyb"
+      ]
+    },
+    {
+      "name": "VAPETRACK - landing",
+      "url": "https://synthlucida.com/landing_vapetrack-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:45:58.104913+00:00",
+      "status_code": 200,
+      "load_time_ms": 803,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 7,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "DĚLŇAS",
+      "url": "https://synthlucida.com/delnas.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:46:00.082606+00:00",
+      "status_code": 200,
+      "load_time_ms": 538,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 12,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/delnas-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "Motiv",
+          "clicked": true
+        },
+        {
+          "text": "element#1",
+          "clicked": true
+        },
+        {
+          "text": "element#2",
+          "clicked": true
+        },
+        {
+          "text": "element#3",
+          "clicked": true
+        },
+        {
+          "text": "element#4",
+          "clicked": true
+        },
+        {
+          "text": "element#5",
+          "clicked": true
+        },
+        {
+          "text": "Sdílet",
+          "clicked": true
+        },
+        {
+          "text": "×",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Ambient Flow (relax.html) - landing",
+      "url": "https://synthlucida.com/relax-landing.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:46:04.921384+00:00",
+      "status_code": 200,
+      "load_time_ms": 768,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 6,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Xtally - landing",
+      "url": "https://synthlucida.com/xtally-landing.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:46:06.891562+00:00",
+      "status_code": 200,
+      "load_time_ms": 1057,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 21,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "DZMASTER - landing",
+      "url": "https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:46:09.460212+00:00",
+      "status_code": 200,
+      "load_time_ms": 1149,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 6,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Xtally Documents",
+      "url": "https://webzen2026.github.io/xtally/?lang=en",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:46:11.851077+00:00",
+      "status_code": 200,
+      "load_time_ms": 888,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 7,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/xtally/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "CS",
+          "clicked": true
+        },
+        {
+          "text": "EN",
+          "clicked": true
+        },
+        {
+          "text": "Toggle appearance",
+          "clicked": true
+        },
+        {
+          "text": "+ New",
+          "clicked": true
+        },
+        {
+          "text": "Templates",
+          "clicked": true
+        },
+        {
+          "text": "Backup",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#10",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#11",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#12",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#13",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#14",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "1\n2\n3",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#16",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#17",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#18",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#19",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#20",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#21",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#22",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#23",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#24",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#25",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#26",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Duplicate",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Delete",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Import",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Export",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Zavřít",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Xtally Sheets",
+      "url": "https://webzen2026.github.io/xtally-sheets/?lang=en",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:47:00.590488+00:00",
+      "status_code": 200,
+      "load_time_ms": 851,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 7,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/xtally-sheets/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "CS",
+          "clicked": true
+        },
+        {
+          "text": "EN",
+          "clicked": true
+        },
+        {
+          "text": "Toggle appearance",
+          "clicked": true
+        },
+        {
+          "text": "+ New spreadsheet",
+          "clicked": true
+        },
+        {
+          "text": "✕",
+          "clicked": true
+        },
+        {
+          "text": "✕",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Templates",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Import",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#11",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#12",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Export",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#14",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#15",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "B",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "I",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "U",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "S",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#20",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#21",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "element#22",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⌀",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "▦",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "+R",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "−R",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "+C",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "−C",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "+",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "Cancel",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Xtally Scanner",
+      "url": "https://webzen2026.github.io/xtally-scanner/?lang=en",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:47:49.524963+00:00",
+      "status_code": 200,
+      "load_time_ms": 788,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 20,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/xtally-scanner/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "CS",
+          "clicked": true
+        },
+        {
+          "text": "EN",
+          "clicked": true
+        },
+        {
+          "text": "Přepnout vzhled",
+          "clicked": true
+        },
+        {
+          "text": "📷\nCamera",
+          "clicked": true
+        },
+        {
+          "text": "📁\nUpload files",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Synth Reviews",
+      "url": "https://synthreviews.github.io/",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:47:53.310362+00:00",
+      "status_code": 200,
+      "load_time_ms": 1121,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 22,
+      "pwa": {
+        "manifest_url": "https://synthreviews.github.io/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "🇨🇿 CZ",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Privacy Policy",
+      "url": "https://synthlucida.com/privacy_policy.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:47:56.099744+00:00",
+      "status_code": 200,
+      "load_time_ms": 757,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 2,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "🇨🇿\nCZ",
+          "clicked": true
+        },
+        {
+          "text": "✉ KONTAKTNÍ FORMULÁŘ\n▾",
+          "clicked": true
+        },
+        {
+          "text": "ODESLAT ZPRÁVU",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "News",
+      "url": "https://synthlucida.com/news.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:47:59.247670+00:00",
+      "status_code": 200,
+      "load_time_ms": 774,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 5,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "CZ",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Download",
+      "url": "https://synthlucida.com/download.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:48:02.067875+00:00",
+      "status_code": 200,
+      "load_time_ms": 859,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 1,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "CZ",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Bio",
+      "url": "https://synthlucida.com/bio.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:48:04.376677+00:00",
+      "status_code": 200,
+      "load_time_ms": 748,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 2,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "CZ",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Services",
+      "url": "https://synthlucida.com/services.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T09:48:06.624234+00:00",
+      "status_code": 200,
+      "load_time_ms": 759,
+      "console_errors": [],
+      "broken_links": [
+        {
+          "href": "https://www.pond5.com/royalty-free-music/item/336383607-welcome-stage",
+          "text": "🎥 Pond5 - Sample for projects",
+          "status": 403
+        },
+        {
+          "href": "https://audiojungle.net/item/stranger-visitors/63657618",
+          "text": "🎼 AudioJungle - Sample for projects",
+          "status": 403
+        }
+      ],
+      "links_checked": 3,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "CZ",
+          "clicked": true
+        },
+        {
+          "text": "✉️ NAPIŠTE MI ZPRÁVU\n▾",
+          "clicked": true
+        },
+        {
+          "text": "ODESLAT ZPRÁVU",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "overall": "warn",
+      "notes": [
+        "2 rozbitých odkazů"
+      ]
+    }
+  ]
+}
