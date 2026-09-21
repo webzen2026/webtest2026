@@ -20,6 +20,8 @@
     { "url": "https://synthlucida.com/michani-liquidu.html", "name": "Mixing Lab", "module": "generic" },
     { "url": "https://synthlucida.com/vodovaha-en.html", "name": "Spirit Level", "module": "generic" },
     { "url": "https://synthlucida.com/landing_vapetrack-en.html", "name": "VAPETRACK - landing", "module": "generic" },
+    { "url": "https://synthlucida.com/vapetrack-en.html", "name": "VAPETRACK - app (EN)", "module": "generic" },
+    { "url": "https://synthlucida.com/vapetrack.html", "name": "VAPETRACK - app (CZ)", "module": "generic" },
     { "url": "https://synthlucida.com/delnas.html", "name": "DĚLŇAS", "module": "generic" },
     { "url": "https://synthlucida.com/relax-landing.html", "name": "Ambient Flow - landing", "module": "generic" },
     { "url": "https://synthlucida.com/relax.html", "name": "Ambient Flow - skutečná appka", "module": "relaxplayer" },
