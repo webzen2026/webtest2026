@@ -34,7 +34,9 @@ jobs:
 
       - name: Spustit kontrolu webů
         id: run_checks
-        run: python check_sites.py
+        run: python -u check_sites.py
+        env:
+          PYTHONUNBUFFERED: "1"
         continue-on-error: true
 
       - name: Uložit report do repozitáře (index.html + historie)
