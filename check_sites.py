@@ -38,6 +38,22 @@ MAX_LINKS_TO_CHECK = 40
 MAX_INTERACTIVE_TO_CLICK = 8
 LINK_CHECK_TIMEOUT_MS = 8000
 
+# Tyhle hlášky se v konzoli objevují prakticky VŽDY při automatizovaném
+# (headless, bez skutečného uživatele) testování - prohlížeč z principu
+# odmítne Storage Access / Vibration API bez "user gesture", i na 100%
+# funkčním webu. Nejsou to skutečné chyby webu, tak se nezapočítávají.
+CONSOLE_NOISE_KEYWORDS = [
+    "requeststorageaccess",
+    "storage access",
+    "vibrate",
+    "vibration api",
+]
+
+
+def is_noise_console_error(msg: str) -> bool:
+    low = (msg or "").lower()
+    return any(kw in low for kw in CONSOLE_NOISE_KEYWORDS)
+
 
 def load_config():
     return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
@@ -232,7 +248,14 @@ async def check_one_site(browser, site, skip_keywords, skip_domains):
             except Exception as e:  # noqa: BLE001
                 result["custom"] = {"tested": False, "error": str(e)[:300]}
 
-        result["console_errors"] = console_errors[:30]
+        real_errors = [e for e in console_errors if not is_noise_console_error(e)]
+        noise_count = len(console_errors) - len(real_errors)
+        result["console_errors"] = real_errors[:30]
+        if noise_count:
+            result["notes"].append(
+                f"(mimochodem: {noise_count} hlášek v konzoli ignorováno - běžný šum "
+                f"z automatizovaného testu, ne skutečná chyba webu)"
+            )
 
         # celkové vyhodnocení - fail má přednost, jinak se sečtou všechny "warn" důvody
         if not resp or resp.status >= 400:
@@ -240,8 +263,8 @@ async def check_one_site(browser, site, skip_keywords, skip_domains):
             result["notes"].append(f"HTTP status {result['status_code']}")
         else:
             warn_reasons = []
-            if console_errors:
-                warn_reasons.append(f"{len(console_errors)} JS/konzolových chyb")
+            if real_errors:
+                warn_reasons.append(f"{len(real_errors)} JS/konzolových chyb")
             if broken:
                 warn_reasons.append(f"{len(broken)} rozbitých odkazů")
             pwa = result["pwa"] or {}

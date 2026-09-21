@@ -7,6 +7,14 @@ STATUS_LABEL = {"ok": "OK", "warn": "Pozor", "fail": "Nefunguje"}
 STATUS_COLOR = {"ok": "#1a9c5b", "warn": "#c78a00", "fail": "#d1373f"}
 STATUS_BG = {"ok": "#e9f9f0", "warn": "#fff6e0", "fail": "#fdecec"}
 
+# SHA-256 hash hesla pro zámek reportu. Heslo samotné NIKDE v repu není -
+# jen jeho hash, ze kterého se heslo prakticky nedá zpětně zjistit.
+# Pozn.: jde o ochranu proti náhodnému kolemjdoucímu / vyhledávačům, ne o
+# skutečné zabezpečení - stránka je HTML/JS na veřejném GitHub Pages, takže
+# šikovný člověk se znalostí vývojářských nástrojů by kontrolu hesla mohl
+# obejít. Pro opravdu citlivá data by musel být celý repozitář Private.
+PASSWORD_HASH_SHA256 = "6e5775e13223bba980afa2bd3e7346458312298f4fdb6376b8a037208cf6cf23"
+
 
 def esc(s):
     return html.escape(str(s)) if s is not None else ""
@@ -175,10 +183,45 @@ def render_report(payload, history_path: Path):
   }}
   a {{ color: #3468eb; }}
   footer {{ margin-top: 30px; }}
+  .lock-screen {{
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); z-index: 10; padding: 16px;
+  }}
+  .lock-box {{
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 28px 24px; width: 100%; max-width: 320px; text-align: center;
+  }}
+  .lock-box h2 {{ margin: 0 0 16px; font-size: 1.1rem; }}
+  .lock-box input {{
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 10px; box-sizing: border-box;
+  }}
+  .lock-box button {{
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: none; background: #3468eb;
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }}
+  .lock-box button:hover {{ background: #2c56c4; }}
+  .pw-error {{ color: #d1373f; font-size: 0.85rem; margin-top: 10px; }}
+  .pw-note {{ color: var(--muted); font-size: 0.78rem; margin-top: 14px; }}
 </style>
 </head>
 <body>
-<div class="container">
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <h2>🔒 Report je zamčený</h2>
+    <input type="password" id="pwInput" autocomplete="current-password" placeholder="Heslo" autofocus>
+    <button id="pwSubmit" type="button">Odemknout</button>
+    <p class="pw-error" id="pwError" style="display:none">Špatné heslo, zkus to znovu.</p>
+    <p class="pw-error" id="pwUnsupported" style="display:none">
+      Tenhle prohlížeč/kontext nepodporuje ověření hesla (potřeba HTTPS - zkus otevřít stránku
+      přes https://, ne jako lokální soubor).
+    </p>
+    <p class="pw-note">Heslo si pamatuje jen tenhle prohlížeč na tomhle zařízení.</p>
+  </div>
+</div>
+
+<div class="container" id="mainContent" style="display:none">
   <h1>Kontrola webů - denní report</h1>
   <p class="muted">Poslední běh: {esc(run_at)}</p>
 
@@ -196,8 +239,74 @@ def render_report(payload, history_path: Path):
   <footer class="muted">
     <p>Automaticky generováno skriptem check_sites.py přes GitHub Actions. Klikni na "Hloubkový test appky"
     nebo "Rozbité odkazy"/"Konzolové chyby" pro detail.</p>
+    <p><a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a></p>
   </footer>
 </div>
+
+<script>
+(function() {{
+  var PASSWORD_HASH = "{PASSWORD_HASH_SHA256}";
+  var STORAGE_KEY = "webtest2026_unlocked_v1";
+
+  var lockScreen = document.getElementById('lockScreen');
+  var mainContent = document.getElementById('mainContent');
+  var pwInput = document.getElementById('pwInput');
+  var pwSubmit = document.getElementById('pwSubmit');
+  var pwError = document.getElementById('pwError');
+  var pwUnsupported = document.getElementById('pwUnsupported');
+
+  function showContent() {{
+    lockScreen.style.display = 'none';
+    mainContent.style.display = 'block';
+  }}
+
+  function sha256Hex(text) {{
+    var enc = new TextEncoder().encode(text);
+    return crypto.subtle.digest('SHA-256', enc).then(function(buf) {{
+      var bytes = Array.from(new Uint8Array(buf));
+      return bytes.map(function(b) {{ return b.toString(16).padStart(2, '0'); }}).join('');
+    }});
+  }}
+
+  if (!window.crypto || !window.crypto.subtle) {{
+    pwUnsupported.style.display = 'block';
+    pwSubmit.disabled = true;
+  }} else {{
+    var alreadyUnlocked = false;
+    try {{ alreadyUnlocked = localStorage.getItem(STORAGE_KEY) === '1'; }} catch (e) {{}}
+
+    if (alreadyUnlocked) {{
+      showContent();
+    }} else {{
+      function attemptUnlock() {{
+        pwError.style.display = 'none';
+        sha256Hex(pwInput.value).then(function(hash) {{
+          if (hash === PASSWORD_HASH) {{
+            try {{ localStorage.setItem(STORAGE_KEY, '1'); }} catch (e) {{}}
+            showContent();
+          }} else {{
+            pwError.style.display = 'block';
+            pwInput.value = '';
+            pwInput.focus();
+          }}
+        }});
+      }}
+      pwSubmit.addEventListener('click', attemptUnlock);
+      pwInput.addEventListener('keydown', function(e) {{
+        if (e.key === 'Enter') attemptUnlock();
+      }});
+    }}
+  }}
+
+  document.addEventListener('click', function(e) {{
+    if (e.target && e.target.id === 'lockAgainLink') {{
+      e.preventDefault();
+      try {{ localStorage.removeItem(STORAGE_KEY); }} catch (err) {{}}
+      location.reload();
+    }}
+  }});
+}})();
+</script>
 </body>
 </html>
 """
