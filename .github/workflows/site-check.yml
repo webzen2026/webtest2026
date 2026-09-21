@@ -1,0 +1,53 @@
+name: Denní kontrola webů
+
+on:
+  schedule:
+    # 06:00 UTC = 08:00 v Praze (léto) / 07:00 (zima). Uprav si klidně čas
+    # podle sebe - první číslo je minuta, druhé hodina (v UTC).
+    - cron: "0 6 * * *"
+  # umožní ruční spuštění tlačítkem "Run workflow" na GitHubu
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stáhnout repozitář
+        uses: actions/checkout@v4
+
+      - name: Nastavit Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Nainstalovat závislosti
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Spustit kontrolu webů
+        id: run_checks
+        run: python check_sites.py
+        continue-on-error: true
+
+      - name: Uložit report do repozitáře (index.html + historie)
+        if: always()
+        run: |
+          git config user.name "webtest-bot"
+          git config user.email "webtest-bot@users.noreply.github.com"
+          git add index.html results/latest.json history.jsonl
+          git diff --cached --quiet || git commit -m "Denní kontrola webů: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Označit běh jako neúspěšný, pokud něco nefunguje
+        if: steps.run_checks.outcome == 'failure'
+        run: |
+          echo "Alespoň jeden web má stav 'Nefunguje' - viz index.html report."
+          exit 1
