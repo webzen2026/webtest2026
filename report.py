@@ -89,6 +89,31 @@ def render_site_card(r):
             + "</details>"
         )
 
+    seo = r.get("seo") or {}
+    seo_html = ""
+    if seo:
+        indexable = seo.get("indexable")
+        icon = "✅" if indexable else ("❓" if indexable is None else "⚠️")
+        blocked = seo.get("blocked_reasons") or []
+        blocked_html = "".join(f"<li>{esc(b)}</li>" for b in blocked)
+        sitemap_txt = (
+            "ano" if seo.get("sitemap_exists") else ("ne" if seo.get("sitemap_exists") is False else "?")
+        )
+        canonical_txt = ""
+        if seo.get("canonical_url"):
+            mismatch = " ⚠️ míří jinam než tahle URL" if seo.get("canonical_mismatch") else ""
+            canonical_txt = f"<p>Canonical: {esc(seo['canonical_url'])}{mismatch}</p>"
+        seo_html = (
+            f"<details><summary>Indexovatelnost Googlem {icon}</summary>"
+            + (f"<ul>{blocked_html}</ul>" if blocked_html else "<p class='muted'>Nic nebrání indexaci.</p>")
+            + f"<p class='muted'>sitemap.xml: {sitemap_txt}"
+            + (f" &middot; URL v sitemap: {'ano' if seo.get('url_listed_in_sitemap') else 'ne/nezjištěno'}"
+               if seo.get("sitemap_exists") else "")
+            + "</p>"
+            + canonical_txt
+            + "</details>"
+        )
+
     interactive = r.get("interactive") or []
     clicked_ok = sum(1 for i in interactive if i.get("clicked"))
     interactive_html = ""
@@ -115,6 +140,7 @@ def render_site_card(r):
       {interactive_html}
       {custom_html}
       {pwa_html}
+      {seo_html}
       {broken_html}
       {console_html}
     </div>

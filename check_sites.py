@@ -26,6 +26,7 @@ from urllib.parse import urljoin, urlparse
 from playwright.async_api import async_playwright
 
 from custom_checks import CUSTOM_MODULES, AUDIO_HOOK_INIT_SCRIPT
+from seo_check import check_seo_indexability
 
 ROOT = Path(__file__).parent
 CONFIG_PATH = ROOT / "sites.json"
@@ -195,7 +196,7 @@ async def check_pwa(page):
     }
 
 
-async def check_one_site(browser, site, skip_keywords, skip_domains):
+async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cache, sitemap_cache):
     name = site["name"]
     url = site["url"]
     module = site.get("module", "generic")
@@ -212,6 +213,7 @@ async def check_one_site(browser, site, skip_keywords, skip_domains):
         "pwa": None,
         "interactive": [],
         "custom": None,
+        "seo": None,
         "overall": "fail",
         "notes": [],
     }
@@ -238,6 +240,13 @@ async def check_one_site(browser, site, skip_keywords, skip_domains):
         result["links_checked"] = checked
 
         result["pwa"] = await check_pwa(page)
+
+        try:
+            result["seo"] = await check_seo_indexability(
+                page, context, url, resp, robots_cache, sitemap_cache
+            )
+        except Exception as e:  # noqa: BLE001
+            result["seo"] = {"error": str(e)[:300], "indexable": None, "blocked_reasons": []}
 
         result["interactive"] = await generic_interactive_smoke_test(page, skip_keywords)
 
@@ -275,6 +284,11 @@ async def check_one_site(browser, site, skip_keywords, skip_domains):
                 warn_reasons.append("custom test nenašel očekávaný prvek (zkontroluj selektory)")
             elif custom and custom.get("tested") and custom.get("success_heuristic") is False:
                 warn_reasons.append("custom test proběhl, ale výsledek nevypadá jako úspěch")
+            seo = result["seo"] or {}
+            if seo.get("blocked_reasons"):
+                warn_reasons.append(
+                    "možná blokovaná indexace na Googlu: " + "; ".join(seo["blocked_reasons"])
+                )
 
             if warn_reasons:
                 result["overall"] = "warn"
@@ -297,11 +311,15 @@ async def run_all():
     sites = [s for s in config["sites"] if not s.get("skip")]
 
     results = []
+    robots_cache = {}  # cache podle originu (schema://host) - robots.txt se stahuje jen jednou za běh
+    sitemap_cache = {}
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         for site in sites:
             print(f"-> kontroluji {site['name']} ({site['url']})")
-            res = await check_one_site(browser, site, skip_keywords, skip_domains)
+            res = await check_one_site(
+                browser, site, skip_keywords, skip_domains, robots_cache, sitemap_cache
+            )
             print(f"   výsledek: {res['overall']}")
             results.append(res)
         await browser.close()
