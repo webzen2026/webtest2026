@@ -46,21 +46,56 @@
   }
   a { color: #3468eb; }
   footer { margin-top: 30px; }
+  .lock-screen {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); z-index: 10; padding: 16px;
+  }
+  .lock-box {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 28px 24px; width: 100%; max-width: 320px; text-align: center;
+  }
+  .lock-box h2 { margin: 0 0 16px; font-size: 1.1rem; }
+  .lock-box input {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 10px; box-sizing: border-box;
+  }
+  .lock-box button {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: none; background: #3468eb;
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  .lock-box button:hover { background: #2c56c4; }
+  .pw-error { color: #d1373f; font-size: 0.85rem; margin-top: 10px; }
+  .pw-note { color: var(--muted); font-size: 0.78rem; margin-top: 14px; }
 </style>
 </head>
 <body>
-<div class="container">
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <h2>🔒 Report je zamčený</h2>
+    <input type="password" id="pwInput" autocomplete="current-password" placeholder="Heslo" autofocus>
+    <button id="pwSubmit" type="button">Odemknout</button>
+    <p class="pw-error" id="pwError" style="display:none">Špatné heslo, zkus to znovu.</p>
+    <p class="pw-error" id="pwUnsupported" style="display:none">
+      Tenhle prohlížeč/kontext nepodporuje ověření hesla (potřeba HTTPS - zkus otevřít stránku
+      přes https://, ne jako lokální soubor).
+    </p>
+    <p class="pw-note">Heslo si pamatuje jen tenhle prohlížeč na tomhle zařízení.</p>
+  </div>
+</div>
+
+<div class="container" id="mainContent" style="display:none">
   <h1>Kontrola webů - denní report</h1>
-  <p class="muted">Poslední běh: 2026-09-21T09:48:10.325443+00:00</p>
+  <p class="muted">Poslední běh: 2026-09-21T10:42:06.775121+00:00</p>
 
   <div class="summary">
-    <span class="pill" style="background:#e9f9f0;color:#1a9c5b">✅ OK: 24</span>
+    <span class="pill" style="background:#e9f9f0;color:#1a9c5b">✅ OK: 32</span>
     <span class="pill" style="background:#fff6e0;color:#c78a00">⚠️ Pozor: 6</span>
     <span class="pill" style="background:#fdecec;color:#d1373f">❌ Nefunguje: 0</span>
   </div>
 
   <p class="muted">Historie posledních běhů (nejnovější vpravo):</p>
-  <div class='history-strip'><span class='dot' style='background:#c78a00' title='2026-09-21: 24 OK, 6 pozor, 0 nefunguje'></span></div>
+  <div class='history-strip'><span class='dot' style='background:#c78a00' title='2026-09-21: 24 OK, 6 pozor, 0 nefunguje'></span><span class='dot' style='background:#c78a00' title='2026-09-21: 32 OK, 6 pozor, 0 nefunguje'></span></div>
 
   
     <div class="card status-warn">
@@ -68,62 +103,17 @@
         <span class="badge" style="background:#fff6e0;color:#c78a00">
           Pozor
         </span>
-        <h3><a href="https://relaxplayer.eu" target="_blank" rel="noopener">RelaxPlayer (landing/app)</a></h3>
-      </div>
-      <p class="muted">HTTP 200 &middot; načtení 1726 ms
-        &middot; zkontrolováno odkazů: 20</p>
-      <ul class='notes'><li>custom test proběhl, ale výsledek nevypadá jako úspěch</li></ul>
-      <p class='muted'>Vyzkoušeno 7/7 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
-      <details open><summary>Hloubkový test appky ⚠️</summary><pre>{
-  &quot;tested&quot;: true,
-  &quot;clicked_selector&quot;: &quot;[aria-label*=&#x27;play&#x27; i]&quot;,
-  &quot;audio_context_states&quot;: [],
-  &quot;success_heuristic&quot;: false,
-  &quot;note&quot;: &quot;Tlačítko se podařilo kliknout, ale žádný AudioContext nemá stav &#x27;running&#x27;. Možné důvody: web používá &lt;audio&gt; element místo Web Audio API (v tom případě uprav tuhle funkci, ať místo AudioContextu kontroluje audio.paused===false), nebo přehrávání vyžaduje druhé kliknutí kvůli autoplay policy prohlížeče.&quot;
-}</pre><p class='muted'>Tlačítko se podařilo kliknout, ale žádný AudioContext nemá stav &#x27;running&#x27;. Možné důvody: web používá &lt;audio&gt; element místo Web Audio API (v tom případě uprav tuhle funkci, ať místo AudioContextu kontroluje audio.paused===false), nebo přehrávání vyžaduje druhé kliknutí kvůli autoplay policy prohlížeče.</p></details>
-      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://relaxplayer.eu/manifest.json' target='_blank' rel='noopener'>https://relaxplayer.eu/manifest.json</a></p><p>Service worker: activated</p></details>
-      
-      
-    </div>
-    
-
-    <div class="card status-warn">
-      <div class="card-head">
-        <span class="badge" style="background:#fff6e0;color:#c78a00">
-          Pozor
-        </span>
-        <h3><a href="https://synthlucida.com/webzen-en.html" target="_blank" rel="noopener">WEBZENith - generator app</a></h3>
-      </div>
-      <p class="muted">HTTP 200 &middot; načtení 1018 ms
-        &middot; zkontrolováno odkazů: 22</p>
-      <ul class='notes'><li>custom test nenašel očekávaný prvek (zkontroluj selektory)</li></ul>
-      <p class='muted'>Vyzkoušeno 8/11 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
-      <details open><summary>Hloubkový test appky ❓</summary><pre>{
-  &quot;tested&quot;: false,
-  &quot;inputs_filled&quot;: 6,
-  &quot;reason&quot;: &quot;Generovací tlačítko nenalezeno - uprav GENERATE_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML.&quot;
-}</pre><p class='muted'>Generovací tlačítko nenalezeno - uprav GENERATE_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML.</p></details>
-      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/webzen-manifest-en.json' target='_blank' rel='noopener'>https://synthlucida.com/webzen-manifest-en.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
-      
-      
-    </div>
-    
-
-    <div class="card status-warn">
-      <div class="card-head">
-        <span class="badge" style="background:#fff6e0;color:#c78a00">
-          Pozor
-        </span>
         <h3><a href="https://uklidnito.eu" target="_blank" rel="noopener">Uklidni To</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 3622 ms
+      <p class="muted">HTTP 200 &middot; načtení 3124 ms
         &middot; zkontrolováno odkazů: 30</p>
-      <ul class='notes'><li>3 JS/konzolových chyb</li></ul>
+      <ul class='notes'><li>(mimochodem: 2 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)</li><li>1 JS/konzolových chyb</li></ul>
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://uklidnito.eu/manifest.json' target='_blank' rel='noopener'>https://uklidnito.eu/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://uklidnito.eu/</p></details>
       
-      <details><summary>Konzolové chyby (3)</summary><ul><li>requestStorageAccess: Permission denied.</li><li>requestStorageAccess: Permission denied.</li><li>Failed to load resource: the server responded with a status of 403 ()</li></ul></details>
+      <details><summary>Konzolové chyby (1)</summary><ul><li>Failed to load resource: the server responded with a status of 403 ()</li></ul></details>
     </div>
     
 
@@ -134,12 +124,13 @@
         </span>
         <h3><a href="https://synthlucida.com/denik-vozidla.html" target="_blank" rel="noopener">Deník vozidla / Vehicle Logbook</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1097 ms
+      <p class="muted">HTTP 200 &middot; načtení 1223 ms
         &middot; zkontrolováno odkazů: 15</p>
       <ul class='notes'><li>2 JS/konzolových chyb</li></ul>
       <p class='muted'>Vyzkoušeno 4/4 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/denik-vozidla-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/denik-vozidla-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/denik-vozidla.html</p></details>
       
       <details><summary>Konzolové chyby (2)</summary><ul><li>A bad HTTP response code (404) was received when fetching the script.</li><li>Failed to load resource: the server responded with a status of 400 ()</li></ul></details>
     </div>
@@ -152,14 +143,15 @@
         </span>
         <h3><a href="https://synthlucida.com/vodovaha-en.html" target="_blank" rel="noopener">Spirit Level</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1104 ms
+      <p class="muted">HTTP 200 &middot; načtení 1355 ms
         &middot; zkontrolováno odkazů: 12</p>
-      <ul class='notes'><li>2 JS/konzolových chyb</li></ul>
+      <ul class='notes'><li>(mimochodem: 1 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)</li><li>1 JS/konzolových chyb</li></ul>
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/vodovaha-en-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/vodovaha-en-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/vodovaha-en.html</p></details>
       
-      <details><summary>Konzolové chyby (2)</summary><ul><li>Blocked call to navigator.vibrate because user hasn&#x27;t tapped on the frame or any embedded frame yet: https://www.chromestatus.com/feature/5644273861001216.</li><li>Failed to load resource: the server responded with a status of 400 ()</li></ul></details>
+      <details><summary>Konzolové chyby (1)</summary><ul><li>Failed to load resource: the server responded with a status of 400 ()</li></ul></details>
     </div>
     
 
@@ -168,15 +160,57 @@
         <span class="badge" style="background:#fff6e0;color:#c78a00">
           Pozor
         </span>
-        <h3><a href="https://synthlucida.com/services.html" target="_blank" rel="noopener">Services</a></h3>
+        <h3><a href="https://synthlucida.com/relax.html" target="_blank" rel="noopener">Ambient Flow - skutečná appka</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 759 ms
+      <p class="muted">HTTP 200 &middot; načtení 893 ms
         &middot; zkontrolováno odkazů: 3</p>
-      <ul class='notes'><li>2 rozbitých odkazů</li></ul>
+      <ul class='notes'><li>custom test nenašel očekávaný prvek (zkontroluj selektory)</li></ul>
+      <p class='muted'>Vyzkoušeno 8/9 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      <details open><summary>Hloubkový test appky ❓</summary><pre>{
+  &quot;tested&quot;: false,
+  &quot;reason&quot;: &quot;Play tlačítko nenalezeno žádným z kandidátních selektorů - uprav PLAY_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML.&quot;
+}</pre><p class='muted'>Play tlačítko nenalezeno žádným z kandidátních selektorů - uprav PLAY_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML.</p></details>
+      
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/relax.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-warn">
+      <div class="card-head">
+        <span class="badge" style="background:#fff6e0;color:#c78a00">
+          Pozor
+        </span>
+        <h3><a href="https://synthlucida.com/privacy_policy.html" target="_blank" rel="noopener">Privacy Policy</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 791 ms
+        &middot; zkontrolováno odkazů: 2</p>
+      <ul class='notes'><li>možná blokovaná indexace na Googlu: meta robots obsahuje &#x27;noindex&#x27; (noindex, nofollow)</li></ul>
       <p class='muted'>Vyzkoušeno 3/3 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       
-      <details><summary>Rozbité odkazy (2)</summary><ul><li><a href='https://www.pond5.com/royalty-free-music/item/336383607-welcome-stage' target='_blank' rel='noopener'>🎥 Pond5 - Sample for projects</a> &mdash; 403</li><li><a href='https://audiojungle.net/item/stranger-visitors/63657618' target='_blank' rel='noopener'>🎼 AudioJungle - Sample for projects</a> &mdash; 403</li></ul></details>
+      <details><summary>Indexovatelnost Googlem ⚠️</summary><ul><li>meta robots obsahuje &#x27;noindex&#x27; (noindex, nofollow)</li></ul><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/privacy_policy.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-warn">
+      <div class="card-head">
+        <span class="badge" style="background:#fff6e0;color:#c78a00">
+          Pozor
+        </span>
+        <h3><a href="https://synthlucida.com/bio.html" target="_blank" rel="noopener">Bio</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 965 ms
+        &middot; zkontrolováno odkazů: 2</p>
+      <ul class='notes'><li>možná blokovaná indexace na Googlu: meta robots obsahuje &#x27;noindex&#x27; (noindex, nofollow)</li></ul>
+      <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      
+      <details><summary>Indexovatelnost Googlem ⚠️</summary><ul><li>meta robots obsahuje &#x27;noindex&#x27; (noindex, nofollow)</li></ul><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.github.io/bio.html ⚠️ míří jinam než tahle URL</p></details>
+      
       
     </div>
     
@@ -188,12 +222,13 @@
         </span>
         <h3><a href="https://synthlucida.com" target="_blank" rel="noopener">SYNTHLUCIDA - Welcome</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1710 ms
+      <p class="muted">HTTP 200 &middot; načtení 1906 ms
         &middot; zkontrolováno odkazů: 30</p>
       
-      <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      <p class='muted'>Vyzkoušeno 7/10 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/</p></details>
       
       
     </div>
@@ -206,12 +241,67 @@
         </span>
         <h3><a href="https://synthlucida.com/index-cz.html" target="_blank" rel="noopener">SYNTHLUCIDA - Welcome (CZ)</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1294 ms
+      <p class="muted">HTTP 200 &middot; načtení 1967 ms
         &middot; zkontrolováno odkazů: 30</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/index-cz.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://relaxplayer.eu" target="_blank" rel="noopener">RelaxPlayer - landing</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1705 ms
+        &middot; zkontrolováno odkazů: 20</p>
+      
+      <p class='muted'>Vyzkoušeno 7/7 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://relaxplayer.eu/manifest.json' target='_blank' rel='noopener'>https://relaxplayer.eu/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://relaxplayer.eu/</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://synthlucida.com/player.html" target="_blank" rel="noopener">RelaxPlayer - skutečný přehrávač</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 2243 ms
+        &middot; zkontrolováno odkazů: 9</p>
+      
+      <p class='muted'>Vyzkoušeno 2/66 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      <details open><summary>Hloubkový test appky ✅</summary><pre>{
+  &quot;tested&quot;: true,
+  &quot;clicked_selector&quot;: &quot;button:has-text(&#x27;▶&#x27;)&quot;,
+  &quot;audio_context_states&quot;: [],
+  &quot;audio_context_running&quot;: false,
+  &quot;timer_before&quot;: [
+    &quot;00:00&quot;,
+    &quot;00:00&quot;
+  ],
+  &quot;timer_after&quot;: [
+    &quot;00:02&quot;,
+    &quot;01:42&quot;
+  ],
+  &quot;timer_advanced&quot;: true,
+  &quot;success_heuristic&quot;: true,
+  &quot;note&quot;: null
+}</pre></details>
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/player.html</p></details>
       
       
     </div>
@@ -224,12 +314,41 @@
         </span>
         <h3><a href="https://synthlucida.com/landing_webzenith-en.html" target="_blank" rel="noopener">WEBZENith - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 818 ms
+      <p class="muted">HTTP 200 &middot; načtení 914 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/landing_webzenith-en.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://synthlucida.com/webzen-en.html" target="_blank" rel="noopener">WEBZENith - generator app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1566 ms
+        &middot; zkontrolováno odkazů: 22</p>
+      
+      <p class='muted'>Vyzkoušeno 8/11 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      <details open><summary>Hloubkový test appky ✅</summary><pre>{
+  &quot;tested&quot;: true,
+  &quot;inputs_filled&quot;: 7,
+  &quot;marker_text_used&quot;: &quot;ClaudeTest86672&quot;,
+  &quot;marker_reflected_in_preview&quot;: true,
+  &quot;download_control_found&quot;: true,
+  &quot;download_selector&quot;: &quot;text=Download HTML&quot;,
+  &quot;success_heuristic&quot;: true,
+  &quot;note&quot;: null
+}</pre></details>
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/webzen-manifest-en.json' target='_blank' rel='noopener'>https://synthlucida.com/webzen-manifest-en.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/webzen-en.html</p></details>
       
       
     </div>
@@ -242,12 +361,13 @@
         </span>
         <h3><a href="https://synthlucida.com/seochecker-en.html" target="_blank" rel="noopener">SEOCHECKER</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1177 ms
+      <p class="muted">HTTP 200 &middot; načtení 1131 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       <p class='muted'>Vyzkoušeno 1/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/seochecker-manifest-en.json' target='_blank' rel='noopener'>https://synthlucida.com/seochecker-manifest-en.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/seochecker-en.html</p></details>
       
       
     </div>
@@ -260,12 +380,13 @@
         </span>
         <h3><a href="https://webzen2026.github.io/seovip/en/landing.html" target="_blank" rel="noopener">SEOVIP</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 4055 ms
+      <p class="muted">HTTP 200 &middot; načtení 1806 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/seovip/en/seochecker-manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/seovip/en/seochecker-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p><p>Canonical: https://webzen2026.github.io/seovip/en/landing.html</p></details>
       
       
     </div>
@@ -276,14 +397,34 @@
         <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
           OK
         </span>
-        <h3><a href="https://noctuarytarot.com/landing-en.html" target="_blank" rel="noopener">Noctuary Tarot</a></h3>
+        <h3><a href="https://noctuarytarot.com/landing-en.html" target="_blank" rel="noopener">Noctuary Tarot - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 818 ms
+      <p class="muted">HTTP 200 &middot; načtení 765 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://noctuarytarot.com/manifest-en.json' target='_blank' rel='noopener'>https://noctuarytarot.com/manifest-en.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://noctuarytarot.com/landing-en.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://noctuarytarot.com/" target="_blank" rel="noopener">Noctuary Tarot - app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1306 ms
+        &middot; zkontrolováno odkazů: 34</p>
+      
+      <p class='muted'>Vyzkoušeno 6/6 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://noctuarytarot.com/manifest.json' target='_blank' rel='noopener'>https://noctuarytarot.com/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://noctuarytarot.com/</p></details>
       
       
     </div>
@@ -296,12 +437,13 @@
         </span>
         <h3><a href="https://synthlucida.com/landing_weather.html" target="_blank" rel="noopener">SYNTHLUCIDA Weather</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 830 ms
+      <p class="muted">HTTP 200 &middot; načtení 853 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/landing_weather.html</p></details>
       
       
     </div>
@@ -314,12 +456,13 @@
         </span>
         <h3><a href="https://synthlucida.com/tripcost.html" target="_blank" rel="noopener">TRIPCOST</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1330 ms
+      <p class="muted">HTTP 200 &middot; načtení 1225 ms
         &middot; zkontrolováno odkazů: 16</p>
       
       <p class='muted'>Vyzkoušeno 7/7 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/tripcost-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/tripcost-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/tripcost.html</p></details>
       
       
     </div>
@@ -332,12 +475,13 @@
         </span>
         <h3><a href="https://synthlucida.com/vyplata.html" target="_blank" rel="noopener">PAYDAY</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 775 ms
+      <p class="muted">HTTP 200 &middot; načtení 769 ms
         &middot; zkontrolováno odkazů: 13</p>
       
       <p class='muted'>Vyzkoušeno 2/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/vyplata-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/vyplata-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/vyplata.html</p></details>
       
       
     </div>
@@ -350,12 +494,13 @@
         </span>
         <h3><a href="https://synthlucida.com/progrese-landing.html" target="_blank" rel="noopener">Progrese - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1088 ms
+      <p class="muted">HTTP 200 &middot; načtení 1069 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/progrese-landing.html</p></details>
       
       
     </div>
@@ -368,12 +513,13 @@
         </span>
         <h3><a href="https://synthlucida.com/michani-liquidu.html" target="_blank" rel="noopener">Mixing Lab</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 574 ms
+      <p class="muted">HTTP 200 &middot; načtení 686 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       <p class='muted'>Vyzkoušeno 4/4 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/michani-liquidu-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/michani-liquidu-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/michani-liquidu.html</p></details>
       
       
     </div>
@@ -386,12 +532,13 @@
         </span>
         <h3><a href="https://synthlucida.com/landing_vapetrack-en.html" target="_blank" rel="noopener">VAPETRACK - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 803 ms
+      <p class="muted">HTTP 200 &middot; načtení 747 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/landing_vapetrack-en.html</p></details>
       
       
     </div>
@@ -404,12 +551,13 @@
         </span>
         <h3><a href="https://synthlucida.com/delnas.html" target="_blank" rel="noopener">DĚLŇAS</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 538 ms
+      <p class="muted">HTTP 200 &middot; načtení 571 ms
         &middot; zkontrolováno odkazů: 12</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/delnas-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/delnas-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/delnas.html</p></details>
       
       
     </div>
@@ -420,14 +568,15 @@
         <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
           OK
         </span>
-        <h3><a href="https://synthlucida.com/relax-landing.html" target="_blank" rel="noopener">Ambient Flow (relax.html) - landing</a></h3>
+        <h3><a href="https://synthlucida.com/relax-landing.html" target="_blank" rel="noopener">Ambient Flow - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 768 ms
+      <p class="muted">HTTP 200 &middot; načtení 846 ms
         &middot; zkontrolováno odkazů: 6</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/relax-landing.html</p></details>
       
       
     </div>
@@ -440,12 +589,13 @@
         </span>
         <h3><a href="https://synthlucida.com/xtally-landing.html" target="_blank" rel="noopener">Xtally - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1057 ms
+      <p class="muted">HTTP 200 &middot; načtení 1396 ms
         &middot; zkontrolováno odkazů: 21</p>
       
       
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ne/nezjištěno</p><p>Canonical: https://synthlucida.com/xtally-landing.html</p></details>
       
       
     </div>
@@ -458,12 +608,13 @@
         </span>
         <h3><a href="https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html" target="_blank" rel="noopener">DZMASTER - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1149 ms
+      <p class="muted">HTTP 200 &middot; načtení 1158 ms
         &middot; zkontrolováno odkazů: 6</p>
       
       
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ne/nezjištěno</p><p>Canonical: https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html</p></details>
       
       
     </div>
@@ -476,12 +627,13 @@
         </span>
         <h3><a href="https://webzen2026.github.io/xtally/?lang=en" target="_blank" rel="noopener">Xtally Documents</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 888 ms
+      <p class="muted">HTTP 200 &middot; načtení 829 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       <p class='muted'>Vyzkoušeno 6/28 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/xtally/manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/xtally/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p><p>Canonical: https://webzen2026.github.io/xtally/ ⚠️ míří jinam než tahle URL</p></details>
       
       
     </div>
@@ -494,12 +646,13 @@
         </span>
         <h3><a href="https://webzen2026.github.io/xtally-sheets/?lang=en" target="_blank" rel="noopener">Xtally Sheets</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 851 ms
+      <p class="muted">HTTP 200 &middot; načtení 916 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       <p class='muted'>Vyzkoušeno 6/28 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/xtally-sheets/manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/xtally-sheets/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p><p>Canonical: https://webzen2026.github.io/xtally-sheets/ ⚠️ míří jinam než tahle URL</p></details>
       
       
     </div>
@@ -512,12 +665,13 @@
         </span>
         <h3><a href="https://webzen2026.github.io/xtally-scanner/?lang=en" target="_blank" rel="noopener">Xtally Scanner</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 788 ms
+      <p class="muted">HTTP 200 &middot; načtení 848 ms
         &middot; zkontrolováno odkazů: 20</p>
       
       <p class='muted'>Vyzkoušeno 5/5 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/xtally-scanner/manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/xtally-scanner/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p><p>Canonical: https://webzen2026.github.io/xtally-scanner/ ⚠️ míří jinam než tahle URL</p></details>
       
       
     </div>
@@ -530,30 +684,13 @@
         </span>
         <h3><a href="https://synthreviews.github.io/" target="_blank" rel="noopener">Synth Reviews</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1121 ms
+      <p class="muted">HTTP 200 &middot; načtení 1271 ms
         &middot; zkontrolováno odkazů: 22</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthreviews.github.io/manifest.json' target='_blank' rel='noopener'>https://synthreviews.github.io/manifest.json</a></p><p>Service worker: activated</p></details>
-      
-      
-    </div>
-    
-
-    <div class="card status-ok">
-      <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
-        <h3><a href="https://synthlucida.com/privacy_policy.html" target="_blank" rel="noopener">Privacy Policy</a></h3>
-      </div>
-      <p class="muted">HTTP 200 &middot; načtení 757 ms
-        &middot; zkontrolováno odkazů: 2</p>
-      
-      <p class='muted'>Vyzkoušeno 3/3 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
-      
-      
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthreviews.github.io/</p></details>
       
       
     </div>
@@ -566,12 +703,13 @@
         </span>
         <h3><a href="https://synthlucida.com/news.html" target="_blank" rel="noopener">News</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 774 ms
+      <p class="muted">HTTP 200 &middot; načtení 717 ms
         &middot; zkontrolováno odkazů: 5</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/news.html</p></details>
       
       
     </div>
@@ -584,12 +722,13 @@
         </span>
         <h3><a href="https://synthlucida.com/download.html" target="_blank" rel="noopener">Download</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 859 ms
+      <p class="muted">HTTP 200 &middot; načtení 911 ms
         &middot; zkontrolováno odkazů: 1</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/download.html</p></details>
       
       
     </div>
@@ -600,14 +739,110 @@
         <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
           OK
         </span>
-        <h3><a href="https://synthlucida.com/bio.html" target="_blank" rel="noopener">Bio</a></h3>
+        <h3><a href="https://synthlucida.com/services.html" target="_blank" rel="noopener">Services</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 748 ms
-        &middot; zkontrolováno odkazů: 2</p>
+      <p class="muted">HTTP 200 &middot; načtení 743 ms
+        &middot; zkontrolováno odkazů: 1</p>
       
-      <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      <p class='muted'>Vyzkoušeno 3/3 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       
       
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/services.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://synthreviews.github.io/dzmaster/dzmaster.html" target="_blank" rel="noopener">DZMASTER - app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1148 ms
+        &middot; zkontrolováno odkazů: 5</p>
+      
+      <p class='muted'>Vyzkoušeno 7/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthreviews.github.io/dzmaster/manifest-dzmaster-cz.json' target='_blank' rel='noopener'>https://synthreviews.github.io/dzmaster/manifest-dzmaster-cz.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ne/nezjištěno</p><p>Canonical: https://synthreviews.github.io/dzmaster/dzmaster.html</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://webzen2026.github.io/seovip/" target="_blank" rel="noopener">SEOVIP - app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1118 ms
+        &middot; zkontrolováno odkazů: 10</p>
+      
+      <p class='muted'>Vyzkoušeno 2/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/seovip/seochecker-manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/seovip/seochecker-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p><p>Canonical: https://webzen2026.github.io/seovip/</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://synthreviews.github.io/progrese/progrese-cz.html" target="_blank" rel="noopener">Progrese - app (CZ)</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1209 ms
+        &middot; zkontrolováno odkazů: 6</p>
+      
+      <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthreviews.github.io/progrese/manifest-progrese-cz.json' target='_blank' rel='noopener'>https://synthreviews.github.io/progrese/manifest-progrese-cz.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ne/nezjištěno</p><p>Canonical: https://synthlucida.com/progrese-cz.html ⚠️ míří jinam než tahle URL</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://webzen2026.github.io/pagezen/" target="_blank" rel="noopener">PageZen - app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1383 ms
+        &middot; zkontrolováno odkazů: 6</p>
+      
+      <p class='muted'>Vyzkoušeno 8/11 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://webzen2026.github.io/pagezen/manifest.json' target='_blank' rel='noopener'>https://webzen2026.github.io/pagezen/manifest.json</a></p><p>Service worker: activated</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ne</p></details>
+      
+      
+    </div>
+    
+
+    <div class="card status-ok">
+      <div class="card-head">
+        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
+          OK
+        </span>
+        <h3><a href="https://synthlucida.com/weather.html" target="_blank" rel="noopener">SYNTHLUCIDA Weather - app</a></h3>
+      </div>
+      <p class="muted">HTTP 200 &middot; načtení 1269 ms
+        &middot; zkontrolováno odkazů: 15</p>
+      
+      <p class='muted'>Vyzkoušeno 5/5 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
+      
+      <details><summary>PWA ✅</summary><p>Manifest: <a href='https://synthlucida.com/weather-manifest.json' target='_blank' rel='noopener'>https://synthlucida.com/weather-manifest.json</a></p><p>Service worker: žádný aktivní service worker</p></details>
+      <details><summary>Indexovatelnost Googlem ✅</summary><p class='muted'>Nic nebrání indexaci.</p><p class='muted'>sitemap.xml: ano &middot; URL v sitemap: ano</p><p>Canonical: https://synthlucida.com/weather.html</p></details>
       
       
     </div>
@@ -616,7 +851,73 @@
   <footer class="muted">
     <p>Automaticky generováno skriptem check_sites.py přes GitHub Actions. Klikni na "Hloubkový test appky"
     nebo "Rozbité odkazy"/"Konzolové chyby" pro detail.</p>
+    <p><a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a></p>
   </footer>
 </div>
+
+<script>
+(function() {
+  var PASSWORD_HASH = "6e5775e13223bba980afa2bd3e7346458312298f4fdb6376b8a037208cf6cf23";
+  var STORAGE_KEY = "webtest2026_unlocked_v1";
+
+  var lockScreen = document.getElementById('lockScreen');
+  var mainContent = document.getElementById('mainContent');
+  var pwInput = document.getElementById('pwInput');
+  var pwSubmit = document.getElementById('pwSubmit');
+  var pwError = document.getElementById('pwError');
+  var pwUnsupported = document.getElementById('pwUnsupported');
+
+  function showContent() {
+    lockScreen.style.display = 'none';
+    mainContent.style.display = 'block';
+  }
+
+  function sha256Hex(text) {
+    var enc = new TextEncoder().encode(text);
+    return crypto.subtle.digest('SHA-256', enc).then(function(buf) {
+      var bytes = Array.from(new Uint8Array(buf));
+      return bytes.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+    });
+  }
+
+  if (!window.crypto || !window.crypto.subtle) {
+    pwUnsupported.style.display = 'block';
+    pwSubmit.disabled = true;
+  } else {
+    var alreadyUnlocked = false;
+    try { alreadyUnlocked = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+
+    if (alreadyUnlocked) {
+      showContent();
+    } else {
+      function attemptUnlock() {
+        pwError.style.display = 'none';
+        sha256Hex(pwInput.value).then(function(hash) {
+          if (hash === PASSWORD_HASH) {
+            try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+            showContent();
+          } else {
+            pwError.style.display = 'block';
+            pwInput.value = '';
+            pwInput.focus();
+          }
+        });
+      }
+      pwSubmit.addEventListener('click', attemptUnlock);
+      pwInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') attemptUnlock();
+      });
+    }
+  }
+
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'lockAgainLink') {
+      e.preventDefault();
+      try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+      location.reload();
+    }
+  });
+})();
+</script>
 </body>
 </html>

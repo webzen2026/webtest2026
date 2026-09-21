@@ -1,19 +1,19 @@
 {
-  "run_at": "2026-09-21T09:48:10.325443+00:00",
+  "run_at": "2026-09-21T10:42:06.775121+00:00",
   "summary": {
-    "ok": 24,
+    "ok": 32,
     "warn": 6,
     "fail": 0,
-    "total": 30
+    "total": 38
   },
   "results": [
     {
       "name": "SYNTHLUCIDA - Welcome",
       "url": "https://synthlucida.com",
       "module": "generic",
-      "checked_at": "2026-09-21T09:44:31.476149+00:00",
+      "checked_at": "2026-09-21T10:28:08.112600+00:00",
       "status_code": 200,
-      "load_time_ms": 1710,
+      "load_time_ms": 1906,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 30,
@@ -52,14 +52,36 @@
         },
         {
           "text": "📋 Popis aplikací\n▾",
-          "clicked": true
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
         },
         {
           "text": "📖\nPřečíst celou recenzi\n▾",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "✉",
           "clicked": true
+        },
+        {
+          "text": "ODESLAT ZPRÁVU",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -67,9 +89,9 @@
       "name": "SYNTHLUCIDA - Welcome (CZ)",
       "url": "https://synthlucida.com/index-cz.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:44:41.337063+00:00",
+      "checked_at": "2026-09-21T10:28:24.069441+00:00",
       "status_code": 200,
-      "load_time_ms": 1294,
+      "load_time_ms": 1967,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 30,
@@ -116,16 +138,27 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/index-cz.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
     {
-      "name": "RelaxPlayer (landing/app)",
+      "name": "RelaxPlayer - landing",
       "url": "https://relaxplayer.eu",
-      "module": "relaxplayer",
-      "checked_at": "2026-09-21T09:44:48.252315+00:00",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:28:32.613307+00:00",
       "status_code": 200,
-      "load_time_ms": 1726,
+      "load_time_ms": 1705,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 20,
@@ -167,25 +200,407 @@
           "clicked": true
         }
       ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://relaxplayer.eu/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "RelaxPlayer - skutečný přehrávač",
+      "url": "https://synthlucida.com/player.html",
+      "module": "relaxplayer",
+      "checked_at": "2026-09-21T10:28:38.577961+00:00",
+      "status_code": 200,
+      "load_time_ms": 2243,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 9,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "ⓘ",
+          "clicked": true
+        },
+        {
+          "text": "S",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "F",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "✨",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "💡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "ASMR",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "PIANO",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "CHILL",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "GAME",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "RELAX",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "DRAWING",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "OFF",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "3s",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "6s",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "8s",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "10s",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "15s",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "WEATHER: OFF",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "＋ PHOTO",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "SUNSET: OFF",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "○BREATHE",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🎵 MY PLAYLIST",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "SAVE",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⬇ DOWNLOAD OFFLINE",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "♡",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🔀",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "▶",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⏭",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🔁",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "💬",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🕓",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🔆",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "🎨",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⤢",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⛶",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "－",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "＋",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "15m",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "30m",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "60m",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "✖",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "✖",
+          "clicked": true
+        }
+      ],
       "custom": {
         "tested": true,
-        "clicked_selector": "[aria-label*='play' i]",
+        "clicked_selector": "button:has-text('▶')",
         "audio_context_states": [],
-        "success_heuristic": false,
-        "note": "Tlačítko se podařilo kliknout, ale žádný AudioContext nemá stav 'running'. Možné důvody: web používá <audio> element místo Web Audio API (v tom případě uprav tuhle funkci, ať místo AudioContextu kontroluje audio.paused===false), nebo přehrávání vyžaduje druhé kliknutí kvůli autoplay policy prohlížeče."
+        "audio_context_running": false,
+        "timer_before": [
+          "00:00",
+          "00:00"
+        ],
+        "timer_after": [
+          "00:02",
+          "01:42"
+        ],
+        "timer_advanced": true,
+        "success_heuristic": true,
+        "note": null
       },
-      "overall": "warn",
-      "notes": [
-        "custom test proběhl, ale výsledek nevypadá jako úspěch"
-      ]
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/player.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
     },
     {
       "name": "WEBZENith - landing",
       "url": "https://synthlucida.com/landing_webzenith-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:44:57.106450+00:00",
+      "checked_at": "2026-09-21T10:30:57.295390+00:00",
       "status_code": 200,
-      "load_time_ms": 818,
+      "load_time_ms": 914,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 14,
@@ -197,6 +612,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/landing_webzenith-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -204,9 +630,9 @@
       "name": "WEBZENith - generator app",
       "url": "https://synthlucida.com/webzen-en.html",
       "module": "webzenith_generator",
-      "checked_at": "2026-09-21T09:44:59.414740+00:00",
+      "checked_at": "2026-09-21T10:31:00.142152+00:00",
       "status_code": 200,
-      "load_time_ms": 1018,
+      "load_time_ms": 1566,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 22,
@@ -266,22 +692,36 @@
         }
       ],
       "custom": {
-        "tested": false,
-        "inputs_filled": 6,
-        "reason": "Generovací tlačítko nenalezeno - uprav GENERATE_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML."
+        "tested": true,
+        "inputs_filled": 7,
+        "marker_text_used": "ClaudeTest86672",
+        "marker_reflected_in_preview": true,
+        "download_control_found": true,
+        "download_selector": "text=Download HTML",
+        "success_heuristic": true,
+        "note": null
       },
-      "overall": "warn",
-      "notes": [
-        "custom test nenašel očekávaný prvek (zkontroluj selektory)"
-      ]
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/webzen-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
     },
     {
       "name": "SEOCHECKER",
       "url": "https://synthlucida.com/seochecker-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:11.093252+00:00",
+      "checked_at": "2026-09-21T10:31:15.524396+00:00",
       "status_code": 200,
-      "load_time_ms": 1177,
+      "load_time_ms": 1131,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 10,
@@ -303,6 +743,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/seochecker-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -310,9 +761,9 @@
       "name": "SEOVIP",
       "url": "https://webzen2026.github.io/seovip/en/landing.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:16.113690+00:00",
+      "checked_at": "2026-09-21T10:31:20.611881+00:00",
       "status_code": 200,
-      "load_time_ms": 4055,
+      "load_time_ms": 1806,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 10,
@@ -324,6 +775,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://webzen2026.github.io/seovip/en/landing.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -331,12 +793,10 @@
       "name": "Uklidni To",
       "url": "https://uklidnito.eu",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:21.486970+00:00",
+      "checked_at": "2026-09-21T10:31:23.973514+00:00",
       "status_code": 200,
-      "load_time_ms": 3622,
+      "load_time_ms": 3124,
       "console_errors": [
-        "requestStorageAccess: Permission denied.",
-        "requestStorageAccess: Permission denied.",
         "Failed to load resource: the server responded with a status of 403 ()"
       ],
       "broken_links": [],
@@ -384,18 +844,30 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://uklidnito.eu/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "warn",
       "notes": [
-        "3 JS/konzolových chyb"
+        "(mimochodem: 2 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)",
+        "1 JS/konzolových chyb"
       ]
     },
     {
-      "name": "Noctuary Tarot",
+      "name": "Noctuary Tarot - landing",
       "url": "https://noctuarytarot.com/landing-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:30.146546+00:00",
+      "checked_at": "2026-09-21T10:31:32.503965+00:00",
       "status_code": 200,
-      "load_time_ms": 818,
+      "load_time_ms": 765,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 10,
@@ -407,6 +879,76 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://noctuarytarot.com/landing-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Noctuary Tarot - app",
+      "url": "https://noctuarytarot.com/",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:31:35.003203+00:00",
+      "status_code": 200,
+      "load_time_ms": 1306,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 34,
+      "pwa": {
+        "manifest_url": "https://noctuarytarot.com/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "☰",
+          "clicked": true
+        },
+        {
+          "text": "⇄\nJazyk (CZ/EN)",
+          "clicked": true
+        },
+        {
+          "text": "🃏 TAROT",
+          "clicked": true
+        },
+        {
+          "text": "✨ ORACLE",
+          "clicked": true
+        },
+        {
+          "text": "🌙 NIGHT",
+          "clicked": true
+        },
+        {
+          "text": "🔀\nDRAW AGAIN",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://noctuarytarot.com/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -414,9 +956,9 @@
       "name": "SYNTHLUCIDA Weather",
       "url": "https://synthlucida.com/landing_weather.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:32.482379+00:00",
+      "checked_at": "2026-09-21T10:31:40.987807+00:00",
       "status_code": 200,
-      "load_time_ms": 830,
+      "load_time_ms": 853,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 7,
@@ -428,6 +970,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/landing_weather.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -435,9 +988,9 @@
       "name": "TRIPCOST",
       "url": "https://synthlucida.com/tripcost.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:34.442123+00:00",
+      "checked_at": "2026-09-21T10:31:43.167680+00:00",
       "status_code": 200,
-      "load_time_ms": 1330,
+      "load_time_ms": 1225,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 16,
@@ -478,6 +1031,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/tripcost.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -485,9 +1049,9 @@
       "name": "Deník vozidla / Vehicle Logbook",
       "url": "https://synthlucida.com/denik-vozidla.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:39.874942+00:00",
+      "checked_at": "2026-09-21T10:31:48.562251+00:00",
       "status_code": 200,
-      "load_time_ms": 1097,
+      "load_time_ms": 1223,
       "console_errors": [
         "A bad HTTP response code (404) was received when fetching the script.",
         "Failed to load resource: the server responded with a status of 400 ()"
@@ -519,6 +1083,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/denik-vozidla.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "warn",
       "notes": [
         "2 JS/konzolových chyb"
@@ -528,9 +1103,9 @@
       "name": "PAYDAY",
       "url": "https://synthlucida.com/vyplata.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:44.058290+00:00",
+      "checked_at": "2026-09-21T10:31:52.843963+00:00",
       "status_code": 200,
-      "load_time_ms": 775,
+      "load_time_ms": 769,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 13,
@@ -551,6 +1126,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/vyplata.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -558,9 +1144,9 @@
       "name": "Progrese - landing",
       "url": "https://synthlucida.com/progrese-landing.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:46.829003+00:00",
+      "checked_at": "2026-09-21T10:31:55.690408+00:00",
       "status_code": 200,
-      "load_time_ms": 1088,
+      "load_time_ms": 1069,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 14,
@@ -572,6 +1158,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/progrese-landing.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -579,9 +1176,9 @@
       "name": "Mixing Lab",
       "url": "https://synthlucida.com/michani-liquidu.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:49.257810+00:00",
+      "checked_at": "2026-09-21T10:31:58.164145+00:00",
       "status_code": 200,
-      "load_time_ms": 574,
+      "load_time_ms": 686,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 14,
@@ -610,6 +1207,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/michani-liquidu.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -617,11 +1225,10 @@
       "name": "Spirit Level",
       "url": "https://synthlucida.com/vodovaha-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:52.454593+00:00",
+      "checked_at": "2026-09-21T10:32:01.560199+00:00",
       "status_code": 200,
-      "load_time_ms": 1104,
+      "load_time_ms": 1355,
       "console_errors": [
-        "Blocked call to navigator.vibrate because user hasn't tapped on the frame or any embedded frame yet: https://www.chromestatus.com/feature/5644273861001216.",
         "Failed to load resource: the server responded with a status of 400 ()"
       ],
       "broken_links": [],
@@ -667,18 +1274,30 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/vodovaha-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "warn",
       "notes": [
-        "2 JS/konzolových chyb"
+        "(mimochodem: 1 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)",
+        "1 JS/konzolových chyb"
       ]
     },
     {
       "name": "VAPETRACK - landing",
       "url": "https://synthlucida.com/landing_vapetrack-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:45:58.104913+00:00",
+      "checked_at": "2026-09-21T10:32:07.442021+00:00",
       "status_code": 200,
-      "load_time_ms": 803,
+      "load_time_ms": 747,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 7,
@@ -690,6 +1309,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/landing_vapetrack-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -697,9 +1327,9 @@
       "name": "DĚLŇAS",
       "url": "https://synthlucida.com/delnas.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:46:00.082606+00:00",
+      "checked_at": "2026-09-21T10:32:09.394231+00:00",
       "status_code": 200,
-      "load_time_ms": 538,
+      "load_time_ms": 571,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 12,
@@ -744,16 +1374,27 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/delnas.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
     {
-      "name": "Ambient Flow (relax.html) - landing",
+      "name": "Ambient Flow - landing",
       "url": "https://synthlucida.com/relax-landing.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:46:04.921384+00:00",
+      "checked_at": "2026-09-21T10:32:14.123689+00:00",
       "status_code": 200,
-      "load_time_ms": 768,
+      "load_time_ms": 846,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 6,
@@ -765,16 +1406,102 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/relax-landing.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
+    },
+    {
+      "name": "Ambient Flow - skutečná appka",
+      "url": "https://synthlucida.com/relax.html",
+      "module": "relaxplayer",
+      "checked_at": "2026-09-21T10:32:16.208040+00:00",
+      "status_code": 200,
+      "load_time_ms": 893,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 3,
+      "pwa": {
+        "manifest_url": null,
+        "manifest_ok": null,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "ℹ",
+          "clicked": true
+        },
+        {
+          "text": "CZ",
+          "clicked": true
+        },
+        {
+          "text": "⬅ BACK",
+          "clicked": true
+        },
+        {
+          "text": "ZAVŘÍT",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "FULLSCREEN: OFF",
+          "clicked": true
+        },
+        {
+          "text": "BINAURAL: OFF",
+          "clicked": true
+        },
+        {
+          "text": "NATURE: OFF",
+          "clicked": true
+        },
+        {
+          "text": "TIMER: OFF",
+          "clicked": true
+        },
+        {
+          "text": "REC 🔴",
+          "clicked": true
+        }
+      ],
+      "custom": {
+        "tested": false,
+        "reason": "Play tlačítko nenalezeno žádným z kandidátních selektorů - uprav PLAY_BUTTON_CANDIDATES v custom_checks.py podle skutečného HTML."
+      },
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/relax.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "warn",
+      "notes": [
+        "custom test nenašel očekávaný prvek (zkontroluj selektory)"
+      ]
     },
     {
       "name": "Xtally - landing",
       "url": "https://synthlucida.com/xtally-landing.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:46:06.891562+00:00",
+      "checked_at": "2026-09-21T10:32:29.428842+00:00",
       "status_code": 200,
-      "load_time_ms": 1057,
+      "load_time_ms": 1396,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 21,
@@ -786,6 +1513,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/xtally-landing.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": false,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -793,9 +1531,9 @@
       "name": "DZMASTER - landing",
       "url": "https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:46:09.460212+00:00",
+      "checked_at": "2026-09-21T10:32:32.764063+00:00",
       "status_code": 200,
-      "load_time_ms": 1149,
+      "load_time_ms": 1158,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 6,
@@ -807,6 +1545,17 @@
       },
       "interactive": [],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": false,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -814,9 +1563,9 @@
       "name": "Xtally Documents",
       "url": "https://webzen2026.github.io/xtally/?lang=en",
       "module": "generic",
-      "checked_at": "2026-09-21T09:46:11.851077+00:00",
+      "checked_at": "2026-09-21T10:32:35.432331+00:00",
       "status_code": 200,
-      "load_time_ms": 888,
+      "load_time_ms": 829,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 7,
@@ -965,6 +1714,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://webzen2026.github.io/xtally/",
+        "canonical_mismatch": true,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -972,9 +1732,9 @@
       "name": "Xtally Sheets",
       "url": "https://webzen2026.github.io/xtally-sheets/?lang=en",
       "module": "generic",
-      "checked_at": "2026-09-21T09:47:00.590488+00:00",
+      "checked_at": "2026-09-21T10:33:24.014060+00:00",
       "status_code": 200,
-      "load_time_ms": 851,
+      "load_time_ms": 916,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 7,
@@ -1123,6 +1883,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://webzen2026.github.io/xtally-sheets/",
+        "canonical_mismatch": true,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -1130,9 +1901,9 @@
       "name": "Xtally Scanner",
       "url": "https://webzen2026.github.io/xtally-scanner/?lang=en",
       "module": "generic",
-      "checked_at": "2026-09-21T09:47:49.524963+00:00",
+      "checked_at": "2026-09-21T10:34:13.025848+00:00",
       "status_code": 200,
-      "load_time_ms": 788,
+      "load_time_ms": 848,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 20,
@@ -1167,6 +1938,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://webzen2026.github.io/xtally-scanner/",
+        "canonical_mismatch": true,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -1174,9 +1956,9 @@
       "name": "Synth Reviews",
       "url": "https://synthreviews.github.io/",
       "module": "generic",
-      "checked_at": "2026-09-21T09:47:53.310362+00:00",
+      "checked_at": "2026-09-21T10:34:17.051826+00:00",
       "status_code": 200,
-      "load_time_ms": 1121,
+      "load_time_ms": 1271,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 22,
@@ -1195,6 +1977,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthreviews.github.io/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -1202,9 +1995,9 @@
       "name": "Privacy Policy",
       "url": "https://synthlucida.com/privacy_policy.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:47:56.099744+00:00",
+      "checked_at": "2026-09-21T10:34:20.246388+00:00",
       "status_code": 200,
-      "load_time_ms": 757,
+      "load_time_ms": 791,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 2,
@@ -1229,16 +2022,31 @@
         }
       ],
       "custom": null,
-      "overall": "ok",
-      "notes": []
+      "seo": {
+        "meta_robots": "noindex, nofollow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/privacy_policy.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [
+          "meta robots obsahuje 'noindex' (noindex, nofollow)"
+        ],
+        "indexable": false
+      },
+      "overall": "warn",
+      "notes": [
+        "možná blokovaná indexace na Googlu: meta robots obsahuje 'noindex' (noindex, nofollow)"
+      ]
     },
     {
       "name": "News",
       "url": "https://synthlucida.com/news.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:47:59.247670+00:00",
+      "checked_at": "2026-09-21T10:34:23.407533+00:00",
       "status_code": 200,
-      "load_time_ms": 774,
+      "load_time_ms": 717,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 5,
@@ -1255,6 +2063,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/news.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -1262,9 +2081,9 @@
       "name": "Download",
       "url": "https://synthlucida.com/download.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:48:02.067875+00:00",
+      "checked_at": "2026-09-21T10:34:26.194516+00:00",
       "status_code": 200,
-      "load_time_ms": 859,
+      "load_time_ms": 911,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 1,
@@ -1281,6 +2100,17 @@
         }
       ],
       "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/download.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
       "overall": "ok",
       "notes": []
     },
@@ -1288,9 +2118,9 @@
       "name": "Bio",
       "url": "https://synthlucida.com/bio.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:48:04.376677+00:00",
+      "checked_at": "2026-09-21T10:34:28.604744+00:00",
       "status_code": 200,
-      "load_time_ms": 748,
+      "load_time_ms": 965,
       "console_errors": [],
       "broken_links": [],
       "links_checked": 2,
@@ -1307,30 +2137,34 @@
         }
       ],
       "custom": null,
-      "overall": "ok",
-      "notes": []
+      "seo": {
+        "meta_robots": "noindex, nofollow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.github.io/bio.html",
+        "canonical_mismatch": true,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [
+          "meta robots obsahuje 'noindex' (noindex, nofollow)"
+        ],
+        "indexable": false
+      },
+      "overall": "warn",
+      "notes": [
+        "možná blokovaná indexace na Googlu: meta robots obsahuje 'noindex' (noindex, nofollow)"
+      ]
     },
     {
       "name": "Services",
       "url": "https://synthlucida.com/services.html",
       "module": "generic",
-      "checked_at": "2026-09-21T09:48:06.624234+00:00",
+      "checked_at": "2026-09-21T10:34:31.122359+00:00",
       "status_code": 200,
-      "load_time_ms": 759,
+      "load_time_ms": 743,
       "console_errors": [],
-      "broken_links": [
-        {
-          "href": "https://www.pond5.com/royalty-free-music/item/336383607-welcome-stage",
-          "text": "🎥 Pond5 - Sample for projects",
-          "status": 403
-        },
-        {
-          "href": "https://audiojungle.net/item/stranger-visitors/63657618",
-          "text": "🎼 AudioJungle - Sample for projects",
-          "status": 403
-        }
-      ],
-      "links_checked": 3,
+      "broken_links": [],
+      "links_checked": 1,
       "pwa": {
         "manifest_url": null,
         "manifest_ok": null,
@@ -1352,10 +2186,328 @@
         }
       ],
       "custom": null,
-      "overall": "warn",
-      "notes": [
-        "2 rozbitých odkazů"
-      ]
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/services.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "DZMASTER - app",
+      "url": "https://synthreviews.github.io/dzmaster/dzmaster.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:34:34.224628+00:00",
+      "status_code": 200,
+      "load_time_ms": 1148,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 5,
+      "pwa": {
+        "manifest_url": "https://synthreviews.github.io/dzmaster/manifest-dzmaster-cz.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "CZ",
+          "clicked": true
+        },
+        {
+          "text": "EN",
+          "clicked": true
+        },
+        {
+          "text": "Drop your .wav file here\nor click to cho",
+          "clicked": true
+        },
+        {
+          "text": "🧠 Smart Auto\nauto\nThe tool analyzes your",
+          "clicked": true
+        },
+        {
+          "text": "🎧 Streaming\n−14 LUFS\nSpotify, YouTube an",
+          "clicked": true
+        },
+        {
+          "text": "🍎 Apple / Podcast\n−16 LUFS\nA quieter, mo",
+          "clicked": true
+        },
+        {
+          "text": "🔊 Club / EDM\n−9 LUFS\nLouder, more aggres",
+          "clicked": true
+        },
+        {
+          "text": "Process track",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthreviews.github.io/dzmaster/dzmaster.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": false,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "SEOVIP - app",
+      "url": "https://webzen2026.github.io/seovip/",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:34:41.035356+00:00",
+      "status_code": 200,
+      "load_time_ms": 1118,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 10,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/seovip/seochecker-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "Rozumím",
+          "clicked": true
+        },
+        {
+          "text": "Zkontrolovat",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow",
+        "x_robots_tag": null,
+        "canonical_url": "https://webzen2026.github.io/seovip/",
+        "canonical_mismatch": false,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "Progrese - app (CZ)",
+      "url": "https://synthreviews.github.io/progrese/progrese-cz.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:34:44.418185+00:00",
+      "status_code": 200,
+      "load_time_ms": 1209,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 6,
+      "pwa": {
+        "manifest_url": "https://synthreviews.github.io/progrese/manifest-progrese-cz.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "Šťastný\nDurová, jasná — pop postupy (I–V",
+          "clicked": true
+        },
+        {
+          "text": "Smutný\nMollová, melancholická nálada",
+          "clicked": true
+        },
+        {
+          "text": "Snový\nDurová, 7 akordy, pomalá a plovouc",
+          "clicked": true
+        },
+        {
+          "text": "Epický\nMollová, dramatická, filmová",
+          "clicked": true
+        },
+        {
+          "text": "Chill / Lo-fi\nMollová, 7 akordy, uvolněn",
+          "clicked": true
+        },
+        {
+          "text": "Temný\nMollová, tajemná a napjatá",
+          "clicked": true
+        },
+        {
+          "text": "Romantický\nDurová, plné 9 akordy, pomalá",
+          "clicked": true
+        },
+        {
+          "text": "Nostalgický\nDurová, teskné tažení vi–IV,",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/progrese-cz.html",
+        "canonical_mismatch": true,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": false,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "PageZen - app",
+      "url": "https://webzen2026.github.io/pagezen/",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:34:50.584549+00:00",
+      "status_code": 200,
+      "load_time_ms": 1383,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 6,
+      "pwa": {
+        "manifest_url": "https://webzen2026.github.io/pagezen/manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": [
+          "activated"
+        ]
+      },
+      "interactive": [
+        {
+          "text": "🌐",
+          "clicked": true
+        },
+        {
+          "text": "↶ Undo",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "↷ Redo",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "⛶ Fullscreen",
+          "clicked": true
+        },
+        {
+          "text": "☰ Menu",
+          "clicked": true
+        },
+        {
+          "text": "↓ Download HTML\nDownloads only the main ",
+          "clicked": true
+        },
+        {
+          "text": "BASIC INFO",
+          "clicked": true
+        },
+        {
+          "text": "⤢",
+          "clicked": false,
+          "error": "Locator.click: Timeout 2000ms exceeded.\nCall log:\nwaiting for locator(\"button, [role=button], input[type=submit], input["
+        },
+        {
+          "text": "SITE ICONS",
+          "clicked": true
+        },
+        {
+          "text": "HERO SECTION",
+          "clicked": true
+        },
+        {
+          "text": "B",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": null,
+        "x_robots_tag": null,
+        "canonical_url": null,
+        "canonical_mismatch": false,
+        "robots_txt_exists": false,
+        "sitemap_exists": false,
+        "url_listed_in_sitemap": null,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
+    },
+    {
+      "name": "SYNTHLUCIDA Weather - app",
+      "url": "https://synthlucida.com/weather.html",
+      "module": "generic",
+      "checked_at": "2026-09-21T10:35:02.220425+00:00",
+      "status_code": 200,
+      "load_time_ms": 1269,
+      "console_errors": [],
+      "broken_links": [],
+      "links_checked": 15,
+      "pwa": {
+        "manifest_url": "https://synthlucida.com/weather-manifest.json",
+        "manifest_ok": true,
+        "service_worker_supported": true,
+        "service_worker_registrations": []
+      },
+      "interactive": [
+        {
+          "text": "Další aplikace",
+          "clicked": true
+        },
+        {
+          "text": "Použít mou polohu",
+          "clicked": true
+        },
+        {
+          "text": "Uložit aktuální město mezi oblíbené",
+          "clicked": true
+        },
+        {
+          "text": "Vybrat barevný motiv",
+          "clicked": true
+        },
+        {
+          "text": "Dle počasí",
+          "clicked": true
+        }
+      ],
+      "custom": null,
+      "seo": {
+        "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        "x_robots_tag": null,
+        "canonical_url": "https://synthlucida.com/weather.html",
+        "canonical_mismatch": false,
+        "robots_txt_exists": true,
+        "sitemap_exists": true,
+        "url_listed_in_sitemap": true,
+        "blocked_reasons": [],
+        "indexable": true
+      },
+      "overall": "ok",
+      "notes": []
     }
   ]
 }
