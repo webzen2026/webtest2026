@@ -248,6 +248,9 @@ def render_report(payload, history_path: Path):
 </div>
 
 <div class="container" id="mainContent" style="display:none">
+  <p class="muted" style="text-align:right; margin-bottom:0;">
+    <a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a>
+  </p>
   <h1>Kontrola webů - denní report</h1>
   <p class="muted">Poslední běh: {esc(run_at)}</p>
 
@@ -265,7 +268,6 @@ def render_report(payload, history_path: Path):
   <footer class="muted">
     <p>Automaticky generováno skriptem check_sites.py přes GitHub Actions. Klikni na "Hloubkový test appky"
     nebo "Rozbité odkazy"/"Konzolové chyby" pro detail.</p>
-    <p><a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a></p>
   </footer>
 </div>
 

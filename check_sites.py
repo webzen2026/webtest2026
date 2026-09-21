@@ -284,11 +284,9 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
                 warn_reasons.append("custom test nenašel očekávaný prvek (zkontroluj selektory)")
             elif custom and custom.get("tested") and custom.get("success_heuristic") is False:
                 warn_reasons.append("custom test proběhl, ale výsledek nevypadá jako úspěch")
-            seo = result["seo"] or {}
-            if seo.get("blocked_reasons"):
-                warn_reasons.append(
-                    "možná blokovaná indexace na Googlu: " + "; ".join(seo["blocked_reasons"])
-                )
+            # Pozn.: indexovatelnost (noindex/robots.txt) se NEZAPOČÍTÁVÁ do Pozor stavu -
+            # spousta stránek má noindex nastavené úmyslně (interní stránky apod.), takže
+            # by to jen dělalo falešné poplachy. Info se pořád zobrazí v detailu karty.
 
             if warn_reasons:
                 result["overall"] = "warn"
