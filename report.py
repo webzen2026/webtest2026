@@ -64,6 +64,23 @@ def render_site_card(r):
         items = "".join(f"<li>{esc(e)}</li>" for e in console_errors[:10])
         console_html = f"<details><summary>Konzolové chyby ({len(console_errors)})</summary><ul>{items}</ul></details>"
 
+    failed_resources = r.get("failed_resources") or []
+    failed_resources_html = ""
+    if failed_resources:
+        items = "".join(
+            f"<li><a href='{esc(fr['url'])}' target='_blank' rel='noopener'>{esc(fr['url'])}</a>"
+            f" &mdash; status {esc(fr['status'])}</li>"
+            for fr in failed_resources[:10]
+        )
+        failed_resources_html = (
+            f"<details open><summary>Nedostupné zdroje na stránce ({len(failed_resources)})</summary>"
+            f"<ul>{items}</ul>"
+            f"<p class='muted'>Tohle jsou přesné adresy, které vracely chybu 4xx/5xx - ukáže se to, "
+            f"i když stránka jinak vypadá a funguje normálně (chybějící soubor/obrázek/skript, "
+            f"co appka třeba ani nepotřebuje, nebo blokace automatizovaného testu third-party službou).</p>"
+            f"</details>"
+        )
+
     pwa = r.get("pwa") or {}
     pwa_html = ""
     if pwa.get("manifest_url"):
@@ -143,6 +160,7 @@ def render_site_card(r):
       {seo_html}
       {broken_html}
       {console_html}
+      {failed_resources_html}
     </div>
     """
 

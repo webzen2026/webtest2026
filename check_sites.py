@@ -208,6 +208,7 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
         "status_code": None,
         "load_time_ms": None,
         "console_errors": [],
+        "failed_resources": [],
         "broken_links": [],
         "links_checked": 0,
         "pwa": None,
@@ -221,8 +222,21 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
     await context.add_init_script(AUDIO_HOOK_INIT_SCRIPT)
     page = await context.new_page()
     console_errors = []
+    failed_resources = []
     page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
     page.on("pageerror", lambda exc: console_errors.append(f"pageerror: {exc}"))
+
+    def _on_response(response):
+        # Zachytí URL a status KAŽDÉHO zdroje, co server vrátil s chybou
+        # (4xx/5xx) - konzolová hláška typu "Failed to load resource: ...
+        # status of 404" sama o sobě neříká KTERÝ soubor to byl, tohle ano.
+        try:
+            if response.status >= 400:
+                failed_resources.append({"url": response.url, "status": response.status})
+        except Exception:  # noqa: BLE001
+            pass
+
+    page.on("response", _on_response)
     try:
         start = time.monotonic()
         resp = await page.goto(url, timeout=NAV_TIMEOUT_MS, wait_until="load")
@@ -260,6 +274,16 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
         real_errors = [e for e in console_errors if not is_noise_console_error(e)]
         noise_count = len(console_errors) - len(real_errors)
         result["console_errors"] = real_errors[:30]
+
+        # dedupe podle URL, ať se stejný nedostupný zdroj v reportu neopakuje
+        seen_urls = set()
+        deduped_failed = []
+        for fr in failed_resources:
+            if fr["url"] in seen_urls:
+                continue
+            seen_urls.add(fr["url"])
+            deduped_failed.append(fr)
+        result["failed_resources"] = deduped_failed[:20]
         if noise_count:
             result["notes"].append(
                 f"(mimochodem: {noise_count} hlášek v konzoli ignorováno - běžný šum "
