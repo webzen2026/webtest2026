@@ -50,10 +50,48 @@ CONSOLE_NOISE_KEYWORDS = [
     "vibration api",
 ]
 
+# Obecná hláška prohlížeče o nedostupném zdroji ("Failed to load resource:
+# ... status of 404", "A bad HTTP response code (404) was received when
+# fetching the script") - stejnou informaci (a navíc s přesnou URL) teď
+# zachytáváme přes sledování síťových odpovědí (viz failed_resources níže),
+# takže se tahle obecná verze do konzolových chyb nepočítá (byla by to
+# duplicita bez přidané hodnoty).
+RESOURCE_FAILURE_MSG_RE = re.compile(
+    r"failed to load resource: the server responded with a status of \d+"
+    r"|bad http response code \(\d+\) was received when fetching",
+    re.IGNORECASE,
+)
+
+# Domény třetích stran, co běžně vrací chybu automatizovanému/headless testu
+# (anti-bot ochrana, reCAPTCHA ověření, detekce robotů u analytiky) - reálným
+# lidským návštěvníkům fungují normálně, takže se nepočítají jako "Pozor".
+NOISE_RESOURCE_DOMAIN_KEYWORDS = [
+    "firebaseappcheck.googleapis.com",  # Firebase App Check + reCAPTCHA Enterprise ověření "je tohle bot?"
+    "goatcounter.com",  # GoatCounter analytika - má vlastní detekci automatizovaných testů
+]
+
 
 def is_noise_console_error(msg: str) -> bool:
     low = (msg or "").lower()
     return any(kw in low for kw in CONSOLE_NOISE_KEYWORDS)
+
+
+def is_resource_failure_message(msg: str) -> bool:
+    return bool(RESOURCE_FAILURE_MSG_RE.search(msg or ""))
+
+
+def is_noise_resource_url(url: str, skip_domains) -> bool:
+    low = (url or "").lower()
+    if any(kw in low for kw in NOISE_RESOURCE_DOMAIN_KEYWORDS):
+        return True
+    try:
+        netloc = urlparse(url).netloc
+    except Exception:  # noqa: BLE001
+        return False
+    # znovupoužije stejný seznam domén jako kontrola rozbitých odkazů
+    # (external_domains_skip_broken_link_check v sites.json) - jde o stejný
+    # princip: nedůvěřovat výsledku automatizovaného testu vůči téhle doméně
+    return any(dom in netloc for dom in skip_domains)
 
 
 def load_config():
@@ -271,8 +309,14 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
             except Exception as e:  # noqa: BLE001
                 result["custom"] = {"tested": False, "error": str(e)[:300]}
 
-        real_errors = [e for e in console_errors if not is_noise_console_error(e)]
-        noise_count = len(console_errors) - len(real_errors)
+        # rozděl konzolové chyby na: 1) známý šum automatizovaného testu (storage/vibrace),
+        # 2) obecné "nedostupný zdroj" hlášky (přesunuté do failed_resources s přesnou URL
+        # níže - nemá smysl je počítat dvakrát), 3) skutečné JS chyby (syntax/exceptions)
+        noise_console = [e for e in console_errors if is_noise_console_error(e)]
+        real_errors = [
+            e for e in console_errors
+            if not is_noise_console_error(e) and not is_resource_failure_message(e)
+        ]
         result["console_errors"] = real_errors[:30]
 
         # dedupe podle URL, ať se stejný nedostupný zdroj v reportu neopakuje
@@ -283,11 +327,23 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
                 continue
             seen_urls.add(fr["url"])
             deduped_failed.append(fr)
-        result["failed_resources"] = deduped_failed[:20]
-        if noise_count:
+
+        # odfiltruj zdroje třetích stran, co běžně blokují automatizovaný test
+        # (reCAPTCHA/App Check ověření bota, analytika s detekcí botů apod.)
+        real_failed = [fr for fr in deduped_failed if not is_noise_resource_url(fr["url"], skip_domains)]
+        noise_resource_count = len(deduped_failed) - len(real_failed)
+        result["failed_resources"] = real_failed[:20]
+
+        if noise_console:
             result["notes"].append(
-                f"(mimochodem: {noise_count} hlášek v konzoli ignorováno - běžný šum "
+                f"(mimochodem: {len(noise_console)} hlášek v konzoli ignorováno - běžný šum "
                 f"z automatizovaného testu, ne skutečná chyba webu)"
+            )
+        if noise_resource_count:
+            result["notes"].append(
+                f"(mimochodem: {noise_resource_count} nedostupných zdrojů ignorováno - "
+                f"blokace třetí strany vůči automatizovanému testu (např. Firebase App Check "
+                f"nebo GoatCounter analytika s detekcí botů), ne chyba webu)"
             )
 
         # celkové vyhodnocení - fail má přednost, jinak se sečtou všechny "warn" důvody
@@ -298,6 +354,8 @@ async def check_one_site(browser, site, skip_keywords, skip_domains, robots_cach
             warn_reasons = []
             if real_errors:
                 warn_reasons.append(f"{len(real_errors)} JS/konzolových chyb")
+            if result["failed_resources"]:
+                warn_reasons.append(f"{len(result['failed_resources'])} nedostupných zdrojů na stránce")
             if broken:
                 warn_reasons.append(f"{len(broken)} rozbitých odkazů")
             pwa = result["pwa"] or {}
