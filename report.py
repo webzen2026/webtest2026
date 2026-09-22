@@ -247,6 +247,33 @@ def render_report(payload, history_path: Path):
   .lock-box button:hover {{ background: #2c56c4; }}
   .pw-error {{ color: #d1373f; font-size: 0.85rem; margin-top: 10px; }}
   .pw-note {{ color: var(--muted); font-size: 0.78rem; margin-top: 14px; }}
+  .add-site-box {{
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 18px; margin: 18px 0; margin-top: 0;
+  }}
+  .add-site-box summary {{ font-size: 0.95rem; font-weight: 600; }}
+  .add-site-form {{ margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }}
+  .add-site-form label {{ display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; }}
+  .add-site-form label.checkbox-label {{ flex-direction: row; align-items: center; gap: 8px; }}
+  .add-site-form ol.howto {{ margin: 0; padding-left: 20px; font-size: 0.88rem; display: flex; flex-direction: column; gap: 6px; }}
+  #moduleHint {{ font-size: 0.78rem; }}
+  .add-site-form input[type=text], .add-site-form input[type=url], .add-site-form select {{
+    padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 0.9rem;
+  }}
+  .add-site-form code {{
+    background: var(--bg); padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
+  }}
+  .add-site-form button {{
+    align-self: flex-start; padding: 8px 14px; border-radius: 8px; border: none;
+    background: #3468eb; color: white; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  }}
+  .add-site-form button:hover {{ background: #2c56c4; }}
+  #generateSiteOutputWrap {{ display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }}
+  #generateSiteOutput {{
+    width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-family: monospace; font-size: 0.82rem; resize: vertical;
+  }}
 </style>
 </head>
 <body>
@@ -277,6 +304,50 @@ def render_report(payload, history_path: Path):
     <span class="pill" style="background:{STATUS_BG['warn']};color:{STATUS_COLOR['warn']}">⚠️ Pozor: {summary['warn']}</span>
     <span class="pill" style="background:{STATUS_BG['fail']};color:{STATUS_COLOR['fail']}">❌ Nefunguje: {summary['fail']}</span>
   </div>
+
+  <details class="add-site-box">
+    <summary>➕ Přidat web do seznamu</summary>
+    <div class="add-site-form">
+      <p class="muted">Report je statická stránka bez serveru na pozadí, takže se sem nedá nic uložit
+        přímo - tenhle formulář ti ale vygeneruje správně naformátovaný řádek na vložení.</p>
+
+      <ol class="howto">
+        <li>Vyplň dole URL, název a typ kontroly a klikni na <strong>Vygenerovat řádek</strong>.</li>
+        <li>Klikni na <strong>📋 Zkopírovat</strong>.</li>
+        <li>Jdi na GitHub do repozitáře <code>webzen2026/webtest2026</code>, otevři soubor
+          <code>sites.json</code> a klikni na tužku (Edit).</li>
+        <li>Najdi pole <code>"sites": [ ... ]</code> a vlož zkopírovaný řádek kamkoli mezi ostatní
+          položky (nejjednodušší je za poslední <code>}},</code> před závěrečnou <code>]</code>).
+          Zkontroluj, že mezi jednotlivými položkami je vždy čárka.</li>
+        <li>Dole klikni <strong>Commit changes...</strong> a potvrď uložení.</li>
+      </ol>
+      <p class="muted">Hotovo - další běh kontroly (ruční přes "Run workflow" nebo příští naplánovaný)
+        už poběží s novým webem v seznamu. V reportu se objeví až po tomhle dalším běhu, ne hned.</p>
+
+      <label>URL stránky
+        <input type="url" id="newSiteUrl" placeholder="https://synthlucida.com/...">
+      </label>
+      <label>Název (jak se zobrazí v reportu)
+        <input type="text" id="newSiteName" placeholder="Např. Nová appka">
+      </label>
+      <label>Typ kontroly
+        <select id="newSiteModule">
+          <option value="generic">Obecná (generic) - pro většinu stránek</option>
+          <option value="relaxplayer">RelaxPlayer - hloubkový test přehrávání zvuku</option>
+          <option value="webzenith_generator">WEBZENith generátor - hloubkový test generátoru</option>
+        </select>
+        <span class="muted" id="moduleHint"></span>
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="newSiteSkip"> Vynechat z kontroly (přidá se do sites.json, ale bude se přeskakovat)
+      </label>
+      <button type="button" id="generateSiteBtn">Vygenerovat řádek</button>
+      <div id="generateSiteOutputWrap" style="display:none">
+        <textarea id="generateSiteOutput" readonly rows="2"></textarea>
+        <button type="button" id="copySiteBtn">📋 Zkopírovat</button>
+      </div>
+    </div>
+  </details>
 
   <p class="muted">Historie posledních běhů (nejnovější vpravo):</p>
   {history_html}
@@ -351,6 +422,66 @@ def render_report(payload, history_path: Path):
       location.reload();
     }}
   }});
+
+  var MODULE_HINTS = {{
+    generic: 'Zkontroluje dostupnost, rychlost, JS chyby, rozbité odkazy, PWA a proklikne tlačítka/formuláře (kromě donate/platba). Hodí se pro naprostou většinu stránek.',
+    relaxplayer: 'Navíc k obecnému testu zkusí appku reálně přehrát zvuk (klikne na Play a ověří, že se spustí audio nebo běží časovač). Použij jen u appek s přehrávačem (RelaxPlayer, Ambient Flow apod.) - u jiných stránek by to jen zbytečně hlásilo "Pozor".',
+    webzenith_generator: 'Navíc k obecnému testu vyplní vzorová data do formuláře a ověří, že se objeví v živém náhledu nebo jde stáhnout výsledek. Použij jen u WEBZENith generátoru.'
+  }};
+  var moduleSelect = document.getElementById('newSiteModule');
+  var moduleHint = document.getElementById('moduleHint');
+  function updateModuleHint() {{
+    if (moduleSelect && moduleHint) {{
+      moduleHint.textContent = MODULE_HINTS[moduleSelect.value] || '';
+    }}
+  }}
+  if (moduleSelect) {{
+    moduleSelect.addEventListener('change', updateModuleHint);
+    updateModuleHint();
+  }}
+
+  var genBtn = document.getElementById('generateSiteBtn');
+  if (genBtn) {{
+    genBtn.addEventListener('click', function() {{
+      var url = document.getElementById('newSiteUrl').value.trim();
+      var name = document.getElementById('newSiteName').value.trim();
+      var mod = document.getElementById('newSiteModule').value;
+      var skip = document.getElementById('newSiteSkip').checked;
+      if (!url || !name) {{
+        alert('Vyplň URL i název.');
+        return;
+      }}
+      var line = '    {{ "url": ' + JSON.stringify(url) + ', "name": ' + JSON.stringify(name) +
+        ', "module": ' + JSON.stringify(mod);
+      if (skip) line += ', "skip": true';
+      line += ' }},';
+      var out = document.getElementById('generateSiteOutput');
+      out.value = line;
+      document.getElementById('generateSiteOutputWrap').style.display = 'flex';
+      out.focus();
+      out.select();
+    }});
+  }}
+
+  var copyBtn = document.getElementById('copySiteBtn');
+  if (copyBtn) {{
+    copyBtn.addEventListener('click', function() {{
+      var out = document.getElementById('generateSiteOutput');
+      out.select();
+      var copied = false;
+      try {{
+        if (navigator.clipboard && navigator.clipboard.writeText) {{
+          navigator.clipboard.writeText(out.value);
+          copied = true;
+        }}
+      }} catch (e) {{}}
+      if (!copied) {{
+        try {{ document.execCommand('copy'); }} catch (e2) {{}}
+      }}
+      copyBtn.textContent = '✅ Zkopírováno';
+      setTimeout(function() {{ copyBtn.textContent = '📋 Zkopírovat'; }}, 1500);
+    }});
+  }}
 }})();
 </script>
 </body>
