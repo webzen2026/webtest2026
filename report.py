@@ -309,20 +309,26 @@ def render_report(payload, history_path: Path):
     <summary>➕ Přidat web do seznamu</summary>
     <div class="add-site-form">
       <p class="muted">Report je statická stránka bez serveru na pozadí, takže se sem nedá nic uložit
-        přímo - tenhle formulář ti ale vygeneruje správně naformátovaný řádek na vložení.</p>
+        přímo. Tenhle formulář si ale na pozadí stáhne tvůj aktuální <code>sites.json</code> z GitHubu,
+        přidá do něj nový web a vygeneruje ti CELÝ nový soubor - stačí ho zkopírovat a na GitHubu
+        přepsat celý starý obsah, žádné ruční vkládání na správné místo.</p>
+      <p class="muted" id="sitesLoadStatus">⏳ Načítám aktuální sites.json z GitHubu...</p>
 
       <ol class="howto">
-        <li>Vyplň dole URL, název a typ kontroly a klikni na <strong>Vygenerovat řádek</strong>.</li>
+        <li>Vyplň dole URL, název a typ kontroly a klikni na <strong>Vygenerovat celý sites.json</strong>.</li>
         <li>Klikni na <strong>📋 Zkopírovat</strong>.</li>
         <li>Jdi na GitHub do repozitáře <code>webzen2026/webtest2026</code>, otevři soubor
           <code>sites.json</code> a klikni na tužku (Edit).</li>
-        <li>Najdi pole <code>"sites": [ ... ]</code> a vlož zkopírovaný řádek kamkoli mezi ostatní
-          položky (nejjednodušší je za poslední <code>}},</code> před závěrečnou <code>]</code>).
-          Zkontroluj, že mezi jednotlivými položkami je vždy čárka.</li>
+        <li>V editoru označ úplně všechno (Ctrl+A / Cmd+A) a vlož místo toho zkopírovaný text
+          (Ctrl+V / Cmd+V) - přepíšeš tak celý soubor najednou.</li>
         <li>Dole klikni <strong>Commit changes...</strong> a potvrď uložení.</li>
       </ol>
       <p class="muted">Hotovo - další běh kontroly (ruční přes "Run workflow" nebo příští naplánovaný)
         už poběží s novým webem v seznamu. V reportu se objeví až po tomhle dalším běhu, ne hned.</p>
+      <p class="muted">⚠️ Pokud jsi <code>sites.json</code> upravil teď před chvílí (v posledních pár
+        minutách) a chceš přidat další web hned potom, klikni nejdřív na "🔄 Obnovit aktuální seznam"
+        dole - GitHub totiž soubory chvíli cachuje a bez obnovení bys mohl vygenerovat soubor bez té
+        úplně poslední změny.</p>
 
       <label>URL stránky
         <input type="url" id="newSiteUrl" placeholder="https://synthlucida.com/...">
@@ -341,9 +347,12 @@ def render_report(payload, history_path: Path):
       <label class="checkbox-label">
         <input type="checkbox" id="newSiteSkip"> Vynechat z kontroly (přidá se do sites.json, ale bude se přeskakovat)
       </label>
-      <button type="button" id="generateSiteBtn">Vygenerovat řádek</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" id="generateSiteBtn">Vygenerovat celý sites.json</button>
+        <button type="button" id="refreshSitesBtn">🔄 Obnovit aktuální seznam</button>
+      </div>
       <div id="generateSiteOutputWrap" style="display:none">
-        <textarea id="generateSiteOutput" readonly rows="2"></textarea>
+        <textarea id="generateSiteOutput" readonly rows="16"></textarea>
         <button type="button" id="copySiteBtn">📋 Zkopírovat</button>
       </div>
     </div>
@@ -440,6 +449,63 @@ def render_report(payload, history_path: Path):
     updateModuleHint();
   }}
 
+  // Adresa syrového (raw) sites.json - veřejné čtení z GitHubu, bez tokenu,
+  // žádné zapisování. Slouží jen k tomu, aby formulář znal aktuální seznam
+  // webů a mohl vygenerovat CELÝ nový soubor místo jednoho řádku k vkládání.
+  var SITES_JSON_RAW_URL = 'https://raw.githubusercontent.com/webzen2026/webtest2026/main/sites.json';
+  var currentSitesConfig = null;
+  var loadStatusEl = document.getElementById('sitesLoadStatus');
+
+  function formatSitesJson(cfg) {{
+    var lines = ['{{'];
+    if (cfg._comment !== undefined) {{
+      lines.push('  "_comment": ' + JSON.stringify(cfg._comment) + ',');
+    }}
+    lines.push('  "sites": [');
+    cfg.sites.forEach(function(s, i) {{
+      var entry = '    {{ "url": ' + JSON.stringify(s.url) + ', "name": ' + JSON.stringify(s.name) +
+        ', "module": ' + JSON.stringify(s.module);
+      if (s.skip) entry += ', "skip": true';
+      entry += ' }}';
+      if (i < cfg.sites.length - 1) entry += ',';
+      lines.push(entry);
+    }});
+    lines.push('  ],');
+    lines.push('  "skip_link_keywords": ' + JSON.stringify(cfg.skip_link_keywords || []) + ',');
+    lines.push('  "external_domains_skip_broken_link_check": ' +
+      JSON.stringify(cfg.external_domains_skip_broken_link_check || []));
+    lines.push('}}');
+    return lines.join('\\n');
+  }}
+
+  function loadCurrentSites() {{
+    if (loadStatusEl) loadStatusEl.textContent = '⏳ Načítám aktuální sites.json z GitHubu...';
+    currentSitesConfig = null;
+    fetch(SITES_JSON_RAW_URL + '?_=' + Date.now())
+      .then(function(resp) {{
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      }})
+      .then(function(cfg) {{
+        currentSitesConfig = cfg;
+        if (loadStatusEl) {{
+          loadStatusEl.textContent = '✅ Aktuální seznam načten (' + (cfg.sites ? cfg.sites.length : 0) + ' webů).';
+        }}
+      }})
+      .catch(function(err) {{
+        if (loadStatusEl) {{
+          loadStatusEl.textContent = '⚠️ Nepodařilo se stáhnout aktuální sites.json (' + err.message +
+            '). Zkus "🔄 Obnovit aktuální seznam" - pokud to nepůjde ani napodruhé, přidej web ručně podle README.';
+        }}
+      }});
+  }}
+  loadCurrentSites();
+
+  var refreshBtn = document.getElementById('refreshSitesBtn');
+  if (refreshBtn) {{
+    refreshBtn.addEventListener('click', loadCurrentSites);
+  }}
+
   var genBtn = document.getElementById('generateSiteBtn');
   if (genBtn) {{
     genBtn.addEventListener('click', function() {{
@@ -451,12 +517,21 @@ def render_report(payload, history_path: Path):
         alert('Vyplň URL i název.');
         return;
       }}
-      var line = '    {{ "url": ' + JSON.stringify(url) + ', "name": ' + JSON.stringify(name) +
-        ', "module": ' + JSON.stringify(mod);
-      if (skip) line += ', "skip": true';
-      line += ' }},';
       var out = document.getElementById('generateSiteOutput');
-      out.value = line;
+      if (!currentSitesConfig) {{
+        alert('Aktuální seznam se ještě nepodařilo načíst - zkus chvíli počkat nebo klikni na "🔄 Obnovit aktuální seznam".');
+        return;
+      }}
+      var dup = currentSitesConfig.sites.some(function(s) {{ return s.url === url; }});
+      if (dup && !confirm('Tahle URL už v seznamu je - přidat ji i tak znovu?')) {{
+        return;
+      }}
+      var newSite = {{ url: url, name: name, module: mod }};
+      if (skip) newSite.skip = true;
+      var newConfig = Object.assign({{}}, currentSitesConfig, {{
+        sites: currentSitesConfig.sites.concat([newSite])
+      }});
+      out.value = formatSitesJson(newConfig);
       document.getElementById('generateSiteOutputWrap').style.display = 'flex';
       out.focus();
       out.select();
