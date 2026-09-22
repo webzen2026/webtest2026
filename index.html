@@ -4,94 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kontrola webů - denní report</title>
+<meta name="description" content="Denní automatická kontrola funkčnosti webů SYNTHLUCIDA rodiny appek.">
+<meta name="theme-color" content="#3b5bdb">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f7f9; --card-bg: #ffffff; --text: #1a1c1e; --muted: #6b7280; --border: #e5e7eb;
+    --bg: #f3f4f7; --bg-soft: #eaecf1; --card-bg: #ffffff; --text: #1a1c1e; --muted: #6b7280;
+    --border: #e5e7eb; --accent: #3b5bdb; --accent-hover: #2f4bc0; --accent-soft: #eef1fd;
+    --shadow: 0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+    --status-ok-color: #15803d; --status-ok-bg: #e7f8ee;
+    --status-warn-color: #a15c00; --status-warn-bg: #fff3dc;
+    --status-fail-color: #c2273a; --status-fail-bg: #fde9ea;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #14161a; --card-bg: #1e2126; --text: #e8eaed; --muted: #9aa0a6; --border: #33373d; }
+    :root {
+      --bg: #101215; --bg-soft: #16191e; --card-bg: #1b1e24; --text: #eceef1; --muted: #9aa0a6;
+      --border: #2b2f36; --accent: #7c94f4; --accent-hover: #92a6f6; --accent-soft: rgba(124,148,244,0.12);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.28);
+      --status-ok-color: #4ade80; --status-ok-bg: rgba(74,222,128,0.13);
+      --status-warn-color: #fbbf24; --status-warn-bg: rgba(251,191,36,0.13);
+      --status-fail-color: #f87171; --status-fail-bg: rgba(248,113,113,0.13);
+    }
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; padding: 24px 16px 60px; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0; padding: 28px 16px 70px; background: var(--bg); color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.45;
   }
-  .container { max-width: 860px; margin: 0 auto; }
-  h1 { font-size: 1.4rem; margin-bottom: 4px; }
+  .container { max-width: 880px; margin: 0 auto; }
+  .app-header { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
+  .app-header img { width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0; }
+  h1 { font-size: 1.35rem; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
   .muted { color: var(--muted); font-size: 0.9rem; }
-  .summary {
-    display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap;
+  .top-link { text-align: right; margin-bottom: 4px; }
+  .top-link a {
+    color: var(--muted); font-size: 0.82rem; text-decoration: none; display: inline-flex;
+    align-items: center; gap: 4px;
   }
+  .top-link a:hover { color: var(--accent); }
+  .summary { display: flex; gap: 10px; margin: 22px 0; flex-wrap: wrap; }
   .summary .pill {
-    padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+    flex: 1 1 140px; padding: 14px 18px; border-radius: 14px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 2px;
   }
-  .history-strip { display: flex; gap: 4px; flex-wrap: wrap; margin: 12px 0 24px; }
-  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .summary .pill .num { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+  .summary .pill .lbl { font-size: 0.78rem; font-weight: 600; opacity: 0.85; }
+  .pill-ok { background: var(--status-ok-bg); color: var(--status-ok-color); }
+  .pill-warn { background: var(--status-warn-bg); color: var(--status-warn-color); }
+  .pill-fail { background: var(--status-fail-bg); color: var(--status-fail-color); }
+  .history-strip { display: flex; gap: 5px; flex-wrap: wrap; margin: 10px 0 26px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .dot-ok { background: var(--status-ok-color); }
+  .dot-warn { background: var(--status-warn-color); }
+  .dot-fail { background: var(--status-fail-color); }
   .card {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px 18px; margin-bottom: 14px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 12px; box-shadow: var(--shadow);
+    transition: border-color 0.15s ease;
   }
-  .card-head { display: flex; align-items: center; gap: 10px; }
-  .card-head h3 { margin: 0; font-size: 1.05rem; }
+  .card:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+  .card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .card-head h3 { margin: 0; font-size: 1.02rem; font-weight: 700; }
   .card-head a { color: var(--text); text-decoration: none; }
-  .card-head a:hover { text-decoration: underline; }
+  .card-head a:hover { color: var(--accent); }
   .badge {
-    display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px; padding: 4px 11px; border-radius: 999px;
+    font-size: 0.76rem; font-weight: 700; white-space: nowrap;
   }
-  ul.notes { margin: 8px 0; padding-left: 18px; }
+  .badge-ok { background: var(--status-ok-bg); color: var(--status-ok-color); }
+  .badge-warn { background: var(--status-warn-bg); color: var(--status-warn-color); }
+  .badge-fail { background: var(--status-fail-bg); color: var(--status-fail-color); }
+  ul.notes { margin: 10px 0; padding-left: 18px; }
+  ul.notes li { margin-bottom: 2px; }
   details { margin-top: 8px; }
-  summary { cursor: pointer; font-size: 0.88rem; }
+  summary { cursor: pointer; font-size: 0.88rem; font-weight: 500; }
+  summary:hover { color: var(--accent); }
   pre {
-    background: var(--bg); border-radius: 8px; padding: 10px; overflow-x: auto; font-size: 0.78rem;
+    background: var(--bg-soft); border-radius: 10px; padding: 10px; overflow-x: auto; font-size: 0.78rem;
   }
-  a { color: #3468eb; }
-  footer { margin-top: 30px; }
+  a { color: var(--accent); }
+  a:hover { color: var(--accent-hover); }
+  footer { margin-top: 34px; }
   .lock-screen {
     position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
     background: var(--bg); z-index: 10; padding: 16px;
   }
   .lock-box {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
-    padding: 28px 24px; width: 100%; max-width: 320px; text-align: center;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+    padding: 30px 26px; width: 100%; max-width: 320px; text-align: center; box-shadow: var(--shadow);
   }
-  .lock-box h2 { margin: 0 0 16px; font-size: 1.1rem; }
+  .lock-box img { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 10px; }
+  .lock-box h2 { margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; }
   .lock-box input {
-    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    width: 100%; padding: 10px 12px; border-radius: 9px; border: 1px solid var(--border);
     background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 10px; box-sizing: border-box;
+    font-family: inherit;
   }
+  .lock-box input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   .lock-box button {
-    width: 100%; padding: 10px 12px; border-radius: 8px; border: none; background: #3468eb;
-    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    width: 100%; padding: 10px 12px; border-radius: 9px; border: none; background: var(--accent);
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit;
   }
-  .lock-box button:hover { background: #2c56c4; }
-  .pw-error { color: #d1373f; font-size: 0.85rem; margin-top: 10px; }
+  .lock-box button:hover { background: var(--accent-hover); }
+  .pw-error { color: var(--status-fail-color); font-size: 0.85rem; margin-top: 10px; }
   .pw-note { color: var(--muted); font-size: 0.78rem; margin-top: 14px; }
   .add-site-box {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 14px 18px; margin: 18px 0; margin-top: 0;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 18px; margin: 18px 0; margin-top: 0; box-shadow: var(--shadow);
   }
-  .add-site-box summary { font-size: 0.95rem; font-weight: 600; }
+  .add-site-box summary { font-size: 0.95rem; font-weight: 700; }
   .add-site-form { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
-  .add-site-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; }
-  .add-site-form label.checkbox-label { flex-direction: row; align-items: center; gap: 8px; }
+  .add-site-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; font-weight: 500; }
+  .add-site-form label.checkbox-label { flex-direction: row; align-items: center; gap: 8px; font-weight: 400; }
   .add-site-form ol.howto { margin: 0; padding-left: 20px; font-size: 0.88rem; display: flex; flex-direction: column; gap: 6px; }
-  #moduleHint { font-size: 0.78rem; }
+  #moduleHint { font-size: 0.78rem; font-weight: 400; }
   .add-site-form input[type=text], .add-site-form input[type=url], .add-site-form select {
-    padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text); font-size: 0.9rem;
+    padding: 9px 11px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 0.9rem; font-family: inherit;
   }
+  .add-site-form input:focus, .add-site-form select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   .add-site-form code {
-    background: var(--bg); padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
+    background: var(--bg-soft); padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
   }
   .add-site-form button {
-    align-self: flex-start; padding: 8px 14px; border-radius: 8px; border: none;
-    background: #3468eb; color: white; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    align-self: flex-start; padding: 9px 16px; border-radius: 9px; border: none;
+    background: var(--accent); color: white; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    font-family: inherit;
   }
-  .add-site-form button:hover { background: #2c56c4; }
+  .add-site-form button:hover { background: var(--accent-hover); }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  #refreshSitesBtn { background: var(--bg-soft); color: var(--text); }
+  #refreshSitesBtn:hover { background: var(--border); }
   #generateSiteOutputWrap { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   #generateSiteOutput {
-    width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text); font-family: monospace; font-size: 0.82rem; resize: vertical;
+    width: 100%; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--bg-soft); color: var(--text); font-family: ui-monospace, monospace; font-size: 0.82rem;
+    resize: vertical;
+  }
+
+  /* dlouhé URL (rozbité odkazy, nedostupné zdroje) ať se zalamují, ne přetékají z karty */
+  .card a, .add-site-form code { overflow-wrap: anywhere; word-break: break-word; }
+
+  /* --- mobil: menší odstupy, plná šířka tlačítek, sloupce místo řádků --- */
+  @media (max-width: 640px) {
+    body { padding: 18px 12px 56px; }
+    .app-header img { width: 28px; height: 28px; border-radius: 8px; }
+    h1 { font-size: 1.12rem; }
+    .summary { gap: 8px; margin: 16px 0; }
+    .summary .pill { flex: 1 1 calc(50% - 8px); padding: 11px 13px; border-radius: 12px; }
+    .summary .pill .num { font-size: 1.2rem; }
+    .summary .pill .lbl { font-size: 0.72rem; }
+    .card { padding: 13px 14px; border-radius: 12px; margin-bottom: 10px; }
+    .card-head h3 { font-size: 0.96rem; }
+    .add-site-box { padding: 12px 14px; }
+    .btn-row { flex-direction: column; }
+    .btn-row button { width: 100%; }
+    .add-site-form button { align-self: stretch; }
+    #generateSiteOutput { font-size: 0.76rem; }
+    .lock-box { padding: 24px 18px; max-width: 100%; }
+    pre { font-size: 0.72rem; }
   }
 </style>
 </head>
@@ -99,7 +178,8 @@
 
 <div class="lock-screen" id="lockScreen">
   <div class="lock-box">
-    <h2>🔒 Report je zamčený</h2>
+    <img src="icon-192.png" alt="">
+    <h2>Report je zamčený</h2>
     <input type="password" id="pwInput" autocomplete="current-password" placeholder="Heslo" autofocus>
     <button id="pwSubmit" type="button">Odemknout</button>
     <p class="pw-error" id="pwError" style="display:none">Špatné heslo, zkus to znovu.</p>
@@ -112,16 +192,19 @@
 </div>
 
 <div class="container" id="mainContent" style="display:none">
-  <p class="muted" style="text-align:right; margin-bottom:0;">
+  <p class="top-link">
     <a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a>
   </p>
-  <h1>Kontrola webů - denní report</h1>
-  <p class="muted">Poslední běh: 2026-09-22T08:05:51.872091+00:00</p>
+  <div class="app-header">
+    <img src="icon-192.png" alt="">
+    <h1>Kontrola webů - denní report</h1>
+  </div>
+  <p class="muted">Poslední běh: 2026-09-22T08:41:18.825570+00:00</p>
 
   <div class="summary">
-    <span class="pill" style="background:#e9f9f0;color:#1a9c5b">✅ OK: 40</span>
-    <span class="pill" style="background:#fff6e0;color:#c78a00">⚠️ Pozor: 0</span>
-    <span class="pill" style="background:#fdecec;color:#d1373f">❌ Nefunguje: 0</span>
+    <span class="pill pill-ok"><span class="num">40</span><span class="lbl">✅ OK</span></span>
+    <span class="pill pill-warn"><span class="num">0</span><span class="lbl">⚠️ Pozor</span></span>
+    <span class="pill pill-fail"><span class="num">0</span><span class="lbl">❌ Nefunguje</span></span>
   </div>
 
   <details class="add-site-box">
@@ -166,7 +249,7 @@
       <label class="checkbox-label">
         <input type="checkbox" id="newSiteSkip"> Vynechat z kontroly (přidá se do sites.json, ale bude se přeskakovat)
       </label>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="btn-row">
         <button type="button" id="generateSiteBtn">Vygenerovat celý sites.json</button>
         <button type="button" id="refreshSitesBtn">🔄 Obnovit aktuální seznam</button>
       </div>
@@ -178,17 +261,15 @@
   </details>
 
   <p class="muted">Historie posledních běhů (nejnovější vpravo):</p>
-  <div class='history-strip'><span class='dot' style='background:#c78a00' title='2026-09-21: 24 OK, 6 pozor, 0 nefunguje'></span><span class='dot' style='background:#c78a00' title='2026-09-21: 32 OK, 6 pozor, 0 nefunguje'></span><span class='dot' style='background:#c78a00' title='2026-09-21: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot' style='background:#c78a00' title='2026-09-22: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot' style='background:#c78a00' title='2026-09-22: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot' style='background:#1a9c5b' title='2026-09-22: 40 OK, 0 pozor, 0 nefunguje'></span></div>
+  <div class='history-strip'><span class='dot dot-warn' title='2026-09-21: 24 OK, 6 pozor, 0 nefunguje'></span><span class='dot dot-warn' title='2026-09-21: 32 OK, 6 pozor, 0 nefunguje'></span><span class='dot dot-warn' title='2026-09-21: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot dot-warn' title='2026-09-22: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot dot-warn' title='2026-09-22: 37 OK, 3 pozor, 0 nefunguje'></span><span class='dot dot-ok' title='2026-09-22: 40 OK, 0 pozor, 0 nefunguje'></span><span class='dot dot-ok' title='2026-09-22: 40 OK, 0 pozor, 0 nefunguje'></span></div>
 
   
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com" target="_blank" rel="noopener">SYNTHLUCIDA - Welcome</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 2272 ms
+      <p class="muted">HTTP 200 &middot; načtení 2235 ms
         &middot; zkontrolováno odkazů: 31</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -203,12 +284,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/index-cz.html" target="_blank" rel="noopener">SYNTHLUCIDA - Welcome (CZ)</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1155 ms
+      <p class="muted">HTTP 200 &middot; načtení 1610 ms
         &middot; zkontrolováno odkazů: 30</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -223,12 +302,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://relaxplayer.eu" target="_blank" rel="noopener">RelaxPlayer - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1843 ms
+      <p class="muted">HTTP 200 &middot; načtení 1180 ms
         &middot; zkontrolováno odkazů: 21</p>
       
       <p class='muted'>Vyzkoušeno 7/7 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -243,12 +320,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/player.html" target="_blank" rel="noopener">RelaxPlayer - skutečný přehrávač</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1785 ms
+      <p class="muted">HTTP 200 &middot; načtení 1970 ms
         &middot; zkontrolováno odkazů: 9</p>
       
       <p class='muted'>Vyzkoušeno 2/66 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -279,12 +354,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/landing_webzenith-en.html" target="_blank" rel="noopener">WEBZENith - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 855 ms
+      <p class="muted">HTTP 200 &middot; načtení 842 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       
@@ -299,19 +372,17 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/webzen-en.html" target="_blank" rel="noopener">WEBZENith - generator app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1249 ms
+      <p class="muted">HTTP 200 &middot; načtení 1250 ms
         &middot; zkontrolováno odkazů: 22</p>
       
       <p class='muted'>Vyzkoušeno 8/11 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
       <details open><summary>Hloubkový test appky ✅</summary><pre>{
   &quot;tested&quot;: true,
   &quot;inputs_filled&quot;: 7,
-  &quot;marker_text_used&quot;: &quot;ClaudeTest63696&quot;,
+  &quot;marker_text_used&quot;: &quot;ClaudeTest65816&quot;,
   &quot;marker_reflected_in_preview&quot;: true,
   &quot;download_control_found&quot;: true,
   &quot;download_selector&quot;: &quot;text=Download HTML&quot;,
@@ -328,12 +399,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/seochecker-en.html" target="_blank" rel="noopener">SEOCHECKER</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1135 ms
+      <p class="muted">HTTP 200 &middot; načtení 1087 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       <p class='muted'>Vyzkoušeno 1/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -348,12 +417,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/seovip/en/landing.html" target="_blank" rel="noopener">SEOVIP</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 4261 ms
+      <p class="muted">HTTP 200 &middot; načtení 4468 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       
@@ -368,12 +435,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://uklidnito.eu" target="_blank" rel="noopener">Uklidni To</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 2882 ms
+      <p class="muted">HTTP 200 &middot; načtení 3150 ms
         &middot; zkontrolováno odkazů: 31</p>
       <ul class='notes'><li>(mimochodem: 2 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)</li><li>(mimochodem: 1 nedostupných zdrojů ignorováno - blokace třetí strany vůči automatizovanému testu (např. Firebase App Check nebo GoatCounter analytika s detekcí botů), ne chyba webu)</li></ul>
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -388,12 +453,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://noctuarytarot.com/landing-en.html" target="_blank" rel="noopener">Noctuary Tarot - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 802 ms
+      <p class="muted">HTTP 200 &middot; načtení 723 ms
         &middot; zkontrolováno odkazů: 11</p>
       
       
@@ -408,12 +471,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://noctuarytarot.com/" target="_blank" rel="noopener">Noctuary Tarot - app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1440 ms
+      <p class="muted">HTTP 200 &middot; načtení 1354 ms
         &middot; zkontrolováno odkazů: 35</p>
       
       <p class='muted'>Vyzkoušeno 6/6 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -428,12 +489,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/landing_weather.html" target="_blank" rel="noopener">SYNTHLUCIDA Weather</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 800 ms
+      <p class="muted">HTTP 200 &middot; načtení 739 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       
@@ -448,12 +507,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/tripcost.html" target="_blank" rel="noopener">TRIPCOST</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1064 ms
+      <p class="muted">HTTP 200 &middot; načtení 1041 ms
         &middot; zkontrolováno odkazů: 16</p>
       
       <p class='muted'>Vyzkoušeno 7/7 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -468,12 +525,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/denik-vozidla.html" target="_blank" rel="noopener">Deník vozidla / Vehicle Logbook</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1175 ms
+      <p class="muted">HTTP 200 &middot; načtení 1073 ms
         &middot; zkontrolováno odkazů: 15</p>
       <ul class='notes'><li>(mimochodem: 1 nedostupných zdrojů ignorováno - blokace třetí strany vůči automatizovanému testu (např. Firebase App Check nebo GoatCounter analytika s detekcí botů), ne chyba webu)</li></ul>
       <p class='muted'>Vyzkoušeno 4/4 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -488,12 +543,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/vyplata.html" target="_blank" rel="noopener">PAYDAY</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 738 ms
+      <p class="muted">HTTP 200 &middot; načtení 702 ms
         &middot; zkontrolováno odkazů: 13</p>
       
       <p class='muted'>Vyzkoušeno 2/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -508,12 +561,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/progrese-landing.html" target="_blank" rel="noopener">Progrese - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1095 ms
+      <p class="muted">HTTP 200 &middot; načtení 1053 ms
         &middot; zkontrolováno odkazů: 15</p>
       
       
@@ -528,12 +579,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/michani-liquidu.html" target="_blank" rel="noopener">Mixing Lab</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 697 ms
+      <p class="muted">HTTP 200 &middot; načtení 692 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       <p class='muted'>Vyzkoušeno 4/4 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -548,12 +597,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/vodovaha-en.html" target="_blank" rel="noopener">Spirit Level</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1132 ms
+      <p class="muted">HTTP 200 &middot; načtení 1074 ms
         &middot; zkontrolováno odkazů: 12</p>
       <ul class='notes'><li>(mimochodem: 1 hlášek v konzoli ignorováno - běžný šum z automatizovaného testu, ne skutečná chyba webu)</li><li>(mimochodem: 1 nedostupných zdrojů ignorováno - blokace třetí strany vůči automatizovanému testu (např. Firebase App Check nebo GoatCounter analytika s detekcí botů), ne chyba webu)</li></ul>
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -568,12 +615,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/landing_vapetrack-en.html" target="_blank" rel="noopener">VAPETRACK - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 767 ms
+      <p class="muted">HTTP 200 &middot; načtení 696 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       
@@ -588,12 +633,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/vapetrack-en.html" target="_blank" rel="noopener">VAPETRACK - app (EN)</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 761 ms
+      <p class="muted">HTTP 200 &middot; načtení 705 ms
         &middot; zkontrolováno odkazů: 12</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -608,12 +651,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/vapetrack.html" target="_blank" rel="noopener">VAPETRACK - app (CZ)</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 798 ms
+      <p class="muted">HTTP 200 &middot; načtení 729 ms
         &middot; zkontrolováno odkazů: 14</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -628,12 +669,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/delnas.html" target="_blank" rel="noopener">DĚLŇAS</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 663 ms
+      <p class="muted">HTTP 200 &middot; načtení 544 ms
         &middot; zkontrolováno odkazů: 12</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -648,12 +687,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/relax-landing.html" target="_blank" rel="noopener">Ambient Flow - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 786 ms
+      <p class="muted">HTTP 200 &middot; načtení 710 ms
         &middot; zkontrolováno odkazů: 6</p>
       
       
@@ -668,12 +705,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/relax.html" target="_blank" rel="noopener">Ambient Flow - skutečná appka</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 900 ms
+      <p class="muted">HTTP 200 &middot; načtení 824 ms
         &middot; zkontrolováno odkazů: 3</p>
       
       <p class='muted'>Vyzkoušeno 8/9 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -688,12 +723,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/xtally-landing.html" target="_blank" rel="noopener">Xtally - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1288 ms
+      <p class="muted">HTTP 200 &middot; načtení 1277 ms
         &middot; zkontrolováno odkazů: 21</p>
       
       
@@ -708,12 +741,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthreviews.github.io/dzmaster/dzmaster-landing-en.html" target="_blank" rel="noopener">DZMASTER - landing</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1141 ms
+      <p class="muted">HTTP 200 &middot; načtení 1134 ms
         &middot; zkontrolováno odkazů: 6</p>
       
       
@@ -728,9 +759,7 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/xtally/?lang=en" target="_blank" rel="noopener">Xtally Documents</a></h3>
       </div>
       <p class="muted">HTTP 200 &middot; načtení 811 ms
@@ -748,12 +777,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/xtally-sheets/?lang=en" target="_blank" rel="noopener">Xtally Sheets</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 848 ms
+      <p class="muted">HTTP 200 &middot; načtení 886 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       <p class='muted'>Vyzkoušeno 6/28 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -768,12 +795,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/xtally-scanner/?lang=en" target="_blank" rel="noopener">Xtally Scanner</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 851 ms
+      <p class="muted">HTTP 200 &middot; načtení 834 ms
         &middot; zkontrolováno odkazů: 20</p>
       
       <p class='muted'>Vyzkoušeno 5/5 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -788,12 +813,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthreviews.github.io/" target="_blank" rel="noopener">Synth Reviews</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1125 ms
+      <p class="muted">HTTP 200 &middot; načtení 1243 ms
         &middot; zkontrolováno odkazů: 22</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -808,12 +831,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/privacy_policy.html" target="_blank" rel="noopener">Privacy Policy</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 761 ms
+      <p class="muted">HTTP 200 &middot; načtení 924 ms
         &middot; zkontrolováno odkazů: 2</p>
       
       <p class='muted'>Vyzkoušeno 3/3 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -828,12 +849,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/news.html" target="_blank" rel="noopener">News</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 790 ms
+      <p class="muted">HTTP 200 &middot; načtení 843 ms
         &middot; zkontrolováno odkazů: 5</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -848,12 +867,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/download.html" target="_blank" rel="noopener">Download</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 885 ms
+      <p class="muted">HTTP 200 &middot; načtení 849 ms
         &middot; zkontrolováno odkazů: 1</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -868,12 +885,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/bio.html" target="_blank" rel="noopener">Bio</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 798 ms
+      <p class="muted">HTTP 200 &middot; načtení 823 ms
         &middot; zkontrolováno odkazů: 2</p>
       
       <p class='muted'>Vyzkoušeno 1/1 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -888,12 +903,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/services.html" target="_blank" rel="noopener">Services</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 788 ms
+      <p class="muted">HTTP 200 &middot; načtení 776 ms
         &middot; zkontrolováno odkazů: 1</p>
       
       <p class='muted'>Vyzkoušeno 3/3 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -908,12 +921,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthreviews.github.io/dzmaster/dzmaster.html" target="_blank" rel="noopener">DZMASTER - app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1083 ms
+      <p class="muted">HTTP 200 &middot; načtení 1256 ms
         &middot; zkontrolováno odkazů: 5</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -928,12 +939,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/seovip/" target="_blank" rel="noopener">SEOVIP - app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1330 ms
+      <p class="muted">HTTP 200 &middot; načtení 1127 ms
         &middot; zkontrolováno odkazů: 10</p>
       
       <p class='muted'>Vyzkoušeno 2/2 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -948,12 +957,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthreviews.github.io/progrese/progrese-cz.html" target="_blank" rel="noopener">Progrese - app (CZ)</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1219 ms
+      <p class="muted">HTTP 200 &middot; načtení 1246 ms
         &middot; zkontrolováno odkazů: 7</p>
       
       <p class='muted'>Vyzkoušeno 8/8 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -968,12 +975,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://webzen2026.github.io/pagezen/" target="_blank" rel="noopener">PageZen - app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1386 ms
+      <p class="muted">HTTP 200 &middot; načtení 1302 ms
         &middot; zkontrolováno odkazů: 6</p>
       
       <p class='muted'>Vyzkoušeno 8/11 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
@@ -988,12 +993,10 @@
 
     <div class="card status-ok">
       <div class="card-head">
-        <span class="badge" style="background:#e9f9f0;color:#1a9c5b">
-          OK
-        </span>
+        <span class="badge badge-ok">✅ OK</span>
         <h3><a href="https://synthlucida.com/weather.html" target="_blank" rel="noopener">SYNTHLUCIDA Weather - app</a></h3>
       </div>
-      <p class="muted">HTTP 200 &middot; načtení 1220 ms
+      <p class="muted">HTTP 200 &middot; načtení 1583 ms
         &middot; zkontrolováno odkazů: 15</p>
       
       <p class='muted'>Vyzkoušeno 5/5 interaktivních prvků (tlačítka, formuláře - kromě donate/platba).</p>
