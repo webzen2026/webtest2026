@@ -40,15 +40,9 @@
     { "url": "https://webzen2026.github.io/seovip/", "name": "SEOVIP - app", "module": "generic" },
     { "url": "https://synthreviews.github.io/progrese/progrese-cz.html", "name": "Progrese - app (CZ)", "module": "generic" },
     { "url": "https://webzen2026.github.io/pagezen/", "name": "PageZen - app", "module": "generic" },
-    { "url": "https://synthlucida.com/weather.html", "name": "SYNTHLUCIDA Weather - app", "module": "generic" }
+    { "url": "https://synthlucida.com/weather.html", "name": "SYNTHLUCIDA Weather - app", "module": "generic" },
+    { "url": "https://synthlucida.com/xtally-landing-cz.html", "name": "Xtally Landing CZ", "module": "generic" }
   ],
-  "skip_link_keywords": [
-    "donate", "darovat", "podpor", "buy", "koupit", "nákup", "nakoupit",
-    "pay", "zaplatit", "platba", "checkout", "objedn", "store", "obchod",
-    "coffee", "ko-fi", "kofi", "patreon", "paypal", "stripe", "gumroad"
-  ],
-  "external_domains_skip_broken_link_check": [
-    "apps.microsoft.com", "play.google.com", "github.com",
-    "pond5.com", "audiojungle.net", "elements.envato.com"
-  ]
+  "skip_link_keywords": ["donate","darovat","podpor","buy","koupit","nákup","nakoupit","pay","zaplatit","platba","checkout","objedn","store","obchod","coffee","ko-fi","kofi","patreon","paypal","stripe","gumroad"],
+  "external_domains_skip_broken_link_check": ["apps.microsoft.com","play.google.com","github.com","pond5.com","audiojungle.net","elements.envato.com"]
 }
