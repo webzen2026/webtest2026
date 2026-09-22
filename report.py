@@ -4,8 +4,13 @@ import json
 from pathlib import Path
 
 STATUS_LABEL = {"ok": "OK", "warn": "Pozor", "fail": "Nefunguje"}
-STATUS_COLOR = {"ok": "#1a9c5b", "warn": "#c78a00", "fail": "#d1373f"}
-STATUS_BG = {"ok": "#e9f9f0", "warn": "#fff6e0", "fail": "#fdecec"}
+STATUS_ICON = {"ok": "✅", "warn": "⚠️", "fail": "❌"}
+# Pozn.: skutečné barvy pro světlý/tmavý režim se teď řeší přes CSS proměnné
+# (.badge-ok/.pill-ok/.dot-ok apod.) v <style>, ne přes inline styly, ať se
+# správně přepínají podle prefers-color-scheme. Tyhle slovníky slouží jen
+# k sestavení názvu CSS třídy (status-{ok|warn|fail}).
+ACCENT = "#3b5bdb"       # ladí s theme_color v manifest.json a barvou ikony
+ACCENT_HOVER = "#2f4bc0"
 
 # SHA-256 hash hesla pro zámek reportu. Heslo samotné NIKDE v repu není -
 # jen jeho hash, ze kterého se heslo prakticky nedá zpětně zjistit.
@@ -38,7 +43,7 @@ def render_history_strip(history):
         date = entry["run_at"][:10]
         title = f"{date}: {s['ok']} OK, {s['warn']} pozor, {s['fail']} nefunguje"
         dots.append(
-            f"<span class='dot' style='background:{STATUS_COLOR[status]}' title='{esc(title)}'></span>"
+            f"<span class='dot dot-{status}' title='{esc(title)}'></span>"
         )
     return "<div class='history-strip'>" + "".join(dots) + "</div>"
 
@@ -146,9 +151,7 @@ def render_site_card(r):
     return f"""
     <div class="card status-{status}">
       <div class="card-head">
-        <span class="badge" style="background:{STATUS_BG[status]};color:{STATUS_COLOR[status]}">
-          {STATUS_LABEL[status]}
-        </span>
+        <span class="badge badge-{status}">{STATUS_ICON[status]} {STATUS_LABEL[status]}</span>
         <h3><a href="{esc(r['url'])}" target="_blank" rel="noopener">{esc(r['name'])}</a></h3>
       </div>
       <p class="muted">HTTP {esc(r.get('status_code')) or 'nedostupné'} &middot; načtení {load_time_txt}
@@ -185,94 +188,173 @@ def render_report(payload, history_path: Path):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kontrola webů - denní report</title>
+<meta name="description" content="Denní automatická kontrola funkčnosti webů SYNTHLUCIDA rodiny appek.">
+<meta name="theme-color" content="#3b5bdb">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {{
-    --bg: #f6f7f9; --card-bg: #ffffff; --text: #1a1c1e; --muted: #6b7280; --border: #e5e7eb;
+    --bg: #f3f4f7; --bg-soft: #eaecf1; --card-bg: #ffffff; --text: #1a1c1e; --muted: #6b7280;
+    --border: #e5e7eb; --accent: {ACCENT}; --accent-hover: {ACCENT_HOVER}; --accent-soft: #eef1fd;
+    --shadow: 0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+    --status-ok-color: #15803d; --status-ok-bg: #e7f8ee;
+    --status-warn-color: #a15c00; --status-warn-bg: #fff3dc;
+    --status-fail-color: #c2273a; --status-fail-bg: #fde9ea;
   }}
   @media (prefers-color-scheme: dark) {{
-    :root {{ --bg: #14161a; --card-bg: #1e2126; --text: #e8eaed; --muted: #9aa0a6; --border: #33373d; }}
+    :root {{
+      --bg: #101215; --bg-soft: #16191e; --card-bg: #1b1e24; --text: #eceef1; --muted: #9aa0a6;
+      --border: #2b2f36; --accent: #7c94f4; --accent-hover: #92a6f6; --accent-soft: rgba(124,148,244,0.12);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 14px rgba(0,0,0,0.28);
+      --status-ok-color: #4ade80; --status-ok-bg: rgba(74,222,128,0.13);
+      --status-warn-color: #fbbf24; --status-warn-bg: rgba(251,191,36,0.13);
+      --status-fail-color: #f87171; --status-fail-bg: rgba(248,113,113,0.13);
+    }}
   }}
   * {{ box-sizing: border-box; }}
   body {{
-    margin: 0; padding: 24px 16px 60px; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0; padding: 28px 16px 70px; background: var(--bg); color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.45;
   }}
-  .container {{ max-width: 860px; margin: 0 auto; }}
-  h1 {{ font-size: 1.4rem; margin-bottom: 4px; }}
+  .container {{ max-width: 880px; margin: 0 auto; }}
+  .app-header {{ display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }}
+  .app-header img {{ width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0; }}
+  h1 {{ font-size: 1.35rem; font-weight: 800; margin: 0; letter-spacing: -0.01em; }}
   .muted {{ color: var(--muted); font-size: 0.9rem; }}
-  .summary {{
-    display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap;
+  .top-link {{ text-align: right; margin-bottom: 4px; }}
+  .top-link a {{
+    color: var(--muted); font-size: 0.82rem; text-decoration: none; display: inline-flex;
+    align-items: center; gap: 4px;
   }}
+  .top-link a:hover {{ color: var(--accent); }}
+  .summary {{ display: flex; gap: 10px; margin: 22px 0; flex-wrap: wrap; }}
   .summary .pill {{
-    padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+    flex: 1 1 140px; padding: 14px 18px; border-radius: 14px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 2px;
   }}
-  .history-strip {{ display: flex; gap: 4px; flex-wrap: wrap; margin: 12px 0 24px; }}
-  .dot {{ width: 12px; height: 12px; border-radius: 50%; display: inline-block; }}
+  .summary .pill .num {{ font-size: 1.5rem; font-weight: 800; line-height: 1.1; }}
+  .summary .pill .lbl {{ font-size: 0.78rem; font-weight: 600; opacity: 0.85; }}
+  .pill-ok {{ background: var(--status-ok-bg); color: var(--status-ok-color); }}
+  .pill-warn {{ background: var(--status-warn-bg); color: var(--status-warn-color); }}
+  .pill-fail {{ background: var(--status-fail-bg); color: var(--status-fail-color); }}
+  .history-strip {{ display: flex; gap: 5px; flex-wrap: wrap; margin: 10px 0 26px; }}
+  .dot {{ width: 11px; height: 11px; border-radius: 50%; display: inline-block; }}
+  .dot-ok {{ background: var(--status-ok-color); }}
+  .dot-warn {{ background: var(--status-warn-color); }}
+  .dot-fail {{ background: var(--status-fail-color); }}
   .card {{
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px 18px; margin-bottom: 14px;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 18px; margin-bottom: 12px; box-shadow: var(--shadow);
+    transition: border-color 0.15s ease;
   }}
-  .card-head {{ display: flex; align-items: center; gap: 10px; }}
-  .card-head h3 {{ margin: 0; font-size: 1.05rem; }}
+  .card:hover {{ border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }}
+  .card-head {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }}
+  .card-head h3 {{ margin: 0; font-size: 1.02rem; font-weight: 700; }}
   .card-head a {{ color: var(--text); text-decoration: none; }}
-  .card-head a:hover {{ text-decoration: underline; }}
+  .card-head a:hover {{ color: var(--accent); }}
   .badge {{
-    display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px; padding: 4px 11px; border-radius: 999px;
+    font-size: 0.76rem; font-weight: 700; white-space: nowrap;
   }}
-  ul.notes {{ margin: 8px 0; padding-left: 18px; }}
+  .badge-ok {{ background: var(--status-ok-bg); color: var(--status-ok-color); }}
+  .badge-warn {{ background: var(--status-warn-bg); color: var(--status-warn-color); }}
+  .badge-fail {{ background: var(--status-fail-bg); color: var(--status-fail-color); }}
+  ul.notes {{ margin: 10px 0; padding-left: 18px; }}
+  ul.notes li {{ margin-bottom: 2px; }}
   details {{ margin-top: 8px; }}
-  summary {{ cursor: pointer; font-size: 0.88rem; }}
+  summary {{ cursor: pointer; font-size: 0.88rem; font-weight: 500; }}
+  summary:hover {{ color: var(--accent); }}
   pre {{
-    background: var(--bg); border-radius: 8px; padding: 10px; overflow-x: auto; font-size: 0.78rem;
+    background: var(--bg-soft); border-radius: 10px; padding: 10px; overflow-x: auto; font-size: 0.78rem;
   }}
-  a {{ color: #3468eb; }}
-  footer {{ margin-top: 30px; }}
+  a {{ color: var(--accent); }}
+  a:hover {{ color: var(--accent-hover); }}
+  footer {{ margin-top: 34px; }}
   .lock-screen {{
     position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
     background: var(--bg); z-index: 10; padding: 16px;
   }}
   .lock-box {{
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
-    padding: 28px 24px; width: 100%; max-width: 320px; text-align: center;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+    padding: 30px 26px; width: 100%; max-width: 320px; text-align: center; box-shadow: var(--shadow);
   }}
-  .lock-box h2 {{ margin: 0 0 16px; font-size: 1.1rem; }}
+  .lock-box img {{ width: 40px; height: 40px; border-radius: 10px; margin-bottom: 10px; }}
+  .lock-box h2 {{ margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; }}
   .lock-box input {{
-    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    width: 100%; padding: 10px 12px; border-radius: 9px; border: 1px solid var(--border);
     background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 10px; box-sizing: border-box;
+    font-family: inherit;
   }}
+  .lock-box input:focus {{ outline: 2px solid var(--accent); outline-offset: 1px; }}
   .lock-box button {{
-    width: 100%; padding: 10px 12px; border-radius: 8px; border: none; background: #3468eb;
-    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    width: 100%; padding: 10px 12px; border-radius: 9px; border: none; background: var(--accent);
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit;
   }}
-  .lock-box button:hover {{ background: #2c56c4; }}
-  .pw-error {{ color: #d1373f; font-size: 0.85rem; margin-top: 10px; }}
+  .lock-box button:hover {{ background: var(--accent-hover); }}
+  .pw-error {{ color: var(--status-fail-color); font-size: 0.85rem; margin-top: 10px; }}
   .pw-note {{ color: var(--muted); font-size: 0.78rem; margin-top: 14px; }}
   .add-site-box {{
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 14px 18px; margin: 18px 0; margin-top: 0;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 18px; margin: 18px 0; margin-top: 0; box-shadow: var(--shadow);
   }}
-  .add-site-box summary {{ font-size: 0.95rem; font-weight: 600; }}
+  .add-site-box summary {{ font-size: 0.95rem; font-weight: 700; }}
   .add-site-form {{ margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }}
-  .add-site-form label {{ display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; }}
-  .add-site-form label.checkbox-label {{ flex-direction: row; align-items: center; gap: 8px; }}
+  .add-site-form label {{ display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; font-weight: 500; }}
+  .add-site-form label.checkbox-label {{ flex-direction: row; align-items: center; gap: 8px; font-weight: 400; }}
   .add-site-form ol.howto {{ margin: 0; padding-left: 20px; font-size: 0.88rem; display: flex; flex-direction: column; gap: 6px; }}
-  #moduleHint {{ font-size: 0.78rem; }}
+  #moduleHint {{ font-size: 0.78rem; font-weight: 400; }}
   .add-site-form input[type=text], .add-site-form input[type=url], .add-site-form select {{
-    padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text); font-size: 0.9rem;
+    padding: 9px 11px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: 0.9rem; font-family: inherit;
   }}
+  .add-site-form input:focus, .add-site-form select:focus {{ outline: 2px solid var(--accent); outline-offset: 1px; }}
   .add-site-form code {{
-    background: var(--bg); padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
+    background: var(--bg-soft); padding: 1px 5px; border-radius: 4px; font-size: 0.85em;
   }}
   .add-site-form button {{
-    align-self: flex-start; padding: 8px 14px; border-radius: 8px; border: none;
-    background: #3468eb; color: white; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    align-self: flex-start; padding: 9px 16px; border-radius: 9px; border: none;
+    background: var(--accent); color: white; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    font-family: inherit;
   }}
-  .add-site-form button:hover {{ background: #2c56c4; }}
+  .add-site-form button:hover {{ background: var(--accent-hover); }}
+  .btn-row {{ display: flex; gap: 8px; flex-wrap: wrap; }}
+  #refreshSitesBtn {{ background: var(--bg-soft); color: var(--text); }}
+  #refreshSitesBtn:hover {{ background: var(--border); }}
   #generateSiteOutputWrap {{ display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }}
   #generateSiteOutput {{
-    width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text); font-family: monospace; font-size: 0.82rem; resize: vertical;
+    width: 100%; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--bg-soft); color: var(--text); font-family: ui-monospace, monospace; font-size: 0.82rem;
+    resize: vertical;
+  }}
+
+  /* dlouhé URL (rozbité odkazy, nedostupné zdroje) ať se zalamují, ne přetékají z karty */
+  .card a, .add-site-form code {{ overflow-wrap: anywhere; word-break: break-word; }}
+
+  /* --- mobil: menší odstupy, plná šířka tlačítek, sloupce místo řádků --- */
+  @media (max-width: 640px) {{
+    body {{ padding: 18px 12px 56px; }}
+    .app-header img {{ width: 28px; height: 28px; border-radius: 8px; }}
+    h1 {{ font-size: 1.12rem; }}
+    .summary {{ gap: 8px; margin: 16px 0; }}
+    .summary .pill {{ flex: 1 1 calc(50% - 8px); padding: 11px 13px; border-radius: 12px; }}
+    .summary .pill .num {{ font-size: 1.2rem; }}
+    .summary .pill .lbl {{ font-size: 0.72rem; }}
+    .card {{ padding: 13px 14px; border-radius: 12px; margin-bottom: 10px; }}
+    .card-head h3 {{ font-size: 0.96rem; }}
+    .add-site-box {{ padding: 12px 14px; }}
+    .btn-row {{ flex-direction: column; }}
+    .btn-row button {{ width: 100%; }}
+    .add-site-form button {{ align-self: stretch; }}
+    #generateSiteOutput {{ font-size: 0.76rem; }}
+    .lock-box {{ padding: 24px 18px; max-width: 100%; }}
+    pre {{ font-size: 0.72rem; }}
   }}
 </style>
 </head>
@@ -280,7 +362,8 @@ def render_report(payload, history_path: Path):
 
 <div class="lock-screen" id="lockScreen">
   <div class="lock-box">
-    <h2>🔒 Report je zamčený</h2>
+    <img src="icon-192.png" alt="">
+    <h2>Report je zamčený</h2>
     <input type="password" id="pwInput" autocomplete="current-password" placeholder="Heslo" autofocus>
     <button id="pwSubmit" type="button">Odemknout</button>
     <p class="pw-error" id="pwError" style="display:none">Špatné heslo, zkus to znovu.</p>
@@ -293,16 +376,19 @@ def render_report(payload, history_path: Path):
 </div>
 
 <div class="container" id="mainContent" style="display:none">
-  <p class="muted" style="text-align:right; margin-bottom:0;">
+  <p class="top-link">
     <a href="#" id="lockAgainLink">🔒 Zamknout report na tomhle zařízení</a>
   </p>
-  <h1>Kontrola webů - denní report</h1>
+  <div class="app-header">
+    <img src="icon-192.png" alt="">
+    <h1>Kontrola webů - denní report</h1>
+  </div>
   <p class="muted">Poslední běh: {esc(run_at)}</p>
 
   <div class="summary">
-    <span class="pill" style="background:{STATUS_BG['ok']};color:{STATUS_COLOR['ok']}">✅ OK: {summary['ok']}</span>
-    <span class="pill" style="background:{STATUS_BG['warn']};color:{STATUS_COLOR['warn']}">⚠️ Pozor: {summary['warn']}</span>
-    <span class="pill" style="background:{STATUS_BG['fail']};color:{STATUS_COLOR['fail']}">❌ Nefunguje: {summary['fail']}</span>
+    <span class="pill pill-ok"><span class="num">{summary['ok']}</span><span class="lbl">✅ OK</span></span>
+    <span class="pill pill-warn"><span class="num">{summary['warn']}</span><span class="lbl">⚠️ Pozor</span></span>
+    <span class="pill pill-fail"><span class="num">{summary['fail']}</span><span class="lbl">❌ Nefunguje</span></span>
   </div>
 
   <details class="add-site-box">
@@ -347,7 +433,7 @@ def render_report(payload, history_path: Path):
       <label class="checkbox-label">
         <input type="checkbox" id="newSiteSkip"> Vynechat z kontroly (přidá se do sites.json, ale bude se přeskakovat)
       </label>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="btn-row">
         <button type="button" id="generateSiteBtn">Vygenerovat celý sites.json</button>
         <button type="button" id="refreshSitesBtn">🔄 Obnovit aktuální seznam</button>
       </div>
