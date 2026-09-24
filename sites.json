@@ -42,7 +42,7 @@
     { "url": "https://webzen2026.github.io/pagezen/", "name": "PageZen - app", "module": "generic" },
     { "url": "https://synthlucida.com/weather.html", "name": "SYNTHLUCIDA Weather - app", "module": "generic" },
     { "url": "https://synthlucida.com/xtally-landing-cz.html", "name": "Xtally Landing CZ", "module": "generic" },
-    { "url": "https://synthlucida.com/vodovaha-landing-en.html", "name": "Vodovaha landing", "module": "generic" }
+    { "url": "https://synthlucida.com/e-liquid-mixing-calculator-landing.html", "name": "Míchárna landing", "module": "generic" }
   ],
   "skip_link_keywords": ["donate","darovat","podpor","buy","koupit","nákup","nakoupit","pay","zaplatit","platba","checkout","objedn","store","obchod","coffee","ko-fi","kofi","patreon","paypal","stripe","gumroad"],
   "external_domains_skip_broken_link_check": ["apps.microsoft.com","play.google.com","github.com","pond5.com","audiojungle.net","elements.envato.com"]
